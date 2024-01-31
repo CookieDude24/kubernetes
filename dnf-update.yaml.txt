@@ -1,0 +1,7 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Update all packages
+      dnf:
+        name: '*'
+        state: latest
