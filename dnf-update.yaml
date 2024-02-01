@@ -2,6 +2,6 @@
   become: yes
   tasks:
     - name: Update all packages
-      dnf:
+      ansible.builtin.dnf:
         name: '*'
         state: latest
