@@ -1,4 +1,4 @@
-- hosts: almalinux
+- hosts: setup
   become: yes
   tasks:
     - name: Install epel-release
