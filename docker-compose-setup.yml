@@ -1,21 +1,17 @@
 - hosts: setup
   become: yes
   tasks:
-    - name: Install epel-release
+    - name: Install epel-release and dnf config manager
       dnf:
         name: epel-release
+        name: dnf-plugins-core
         state: present
 
     - name: Enable crb
       command: dnf config-manager --set-enabled crb
 
-    - name: Install yum-utils
-      yum:
-        name: yum-utils
-        state: present
-
     - name: Add Docker repo
-      command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      command: dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
     - name: Install Docker and plugins
       dnf:
