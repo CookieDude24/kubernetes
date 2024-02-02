@@ -1,10 +1,15 @@
 - hosts: setup
   become: yes
   tasks:
-    - name: Install epel-release and dnf config manager
+    - name: install Basic tools
+      dnf:
+        name: 
+          - dnf-plugins-core
+          - nano
+        state: present
+    - name: Install epel-release
       dnf:
         name: epel-release
-        name: dnf-plugins-core
         state: present
 
     - name: Enable crb
