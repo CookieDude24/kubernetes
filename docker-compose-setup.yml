@@ -32,6 +32,12 @@
       user:
         name: docker
         state: present
+        
+    - name: enable and start docker
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
 
     - name: Create /home/docker directory
       file:
