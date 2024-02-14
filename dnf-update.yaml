@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: almalinux
   become: yes
   tasks:
     - name: Update all packages
