@@ -5,3 +5,16 @@
       ansible.builtin.dnf:
         name: '*'
         state: latest
+    - name: reboot if requiered
+      ansible.builtin.command: needs-restarting -r
+      register: reboot_required
+      failed_when: false
+      changed_when: reboot_required.rc != 0
+      notify:
+          - Reboot Almalinux
+  handlers:
+      - name: Reboot Almalinux
+        ansible.builtin.reboot:
+            msg: "Rebooten du wappler wei update installiert wordn is (Reboot initiated by Ansible)"
+            reboot_timeout: 3600
+            test_command: w
