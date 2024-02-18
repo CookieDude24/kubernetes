@@ -1,4 +1,4 @@
-- hosts: almalinux
+- hosts: docker
   become: yes
   tasks:
     - name: Restart services
