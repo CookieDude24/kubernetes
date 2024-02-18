@@ -4,7 +4,7 @@
     - name: Restart services
       community.docker.docker_compose_v2:
         project_src: /home/docker/
-        restarted: true
+        state: restarted
       register: output
 
     - name: Show results
