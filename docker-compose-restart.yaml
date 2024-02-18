@@ -1,0 +1,13 @@
+- hosts: almalinux
+  become: yes
+  tasks:
+    - name: Restart services
+      community.docker.docker_compose:
+        project_src: /home/docker/
+        build: false
+        restarted: true
+      register: output
+
+    - name: Show results
+      ansible.builtin.debug:
+        var: output
