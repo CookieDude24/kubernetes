@@ -1,4 +1,4 @@
-- hosts: setup
+- hosts: setup:&docker
   become: yes
   tasks:
     - name: install Basic tools
@@ -32,14 +32,10 @@
       user:
         name: docker
         state: present
+        create_home: true
         
     - name: enable and start docker
       ansible.builtin.service:
         name: docker
         state: started
         enabled: yes
-
-    - name: Create /home/docker directory
-      file:
-        path: /home/docker
-        state: directory

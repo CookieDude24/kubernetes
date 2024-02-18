@@ -15,6 +15,6 @@
   handlers:
       - name: Reboot Almalinux
         ansible.builtin.reboot:
-            msg: "Rebooten du wappler wei update installiert wordn is (Reboot initiated by Ansible)"
+            msg: "Reboot initiated by Ansible"
             reboot_timeout: 3600
             test_command: w
