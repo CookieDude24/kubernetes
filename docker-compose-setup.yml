@@ -1,22 +1,11 @@
 - hosts: almalinux:&docker
   become: yes
   tasks:
-    - name: install Basic tools
-      dnf:
-        name: 
-          - dnf-plugins-core
-          - nano
-        state: present
-    - name: Install epel-release
-      dnf:
-        name: epel-release
-        state: present
-
-    - name: Enable crb
-      command: dnf config-manager --set-enabled crb
-
-    - name: Add Docker repo
-      command: dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  
+    - name: ensure Docker repo is enabled
+      community.general.dnf_config_manager:
+        name: https://download.docker.com/linux/centos/docker-ce.repo
+        state: enabled 
 
     - name: Install Docker and plugins
       dnf:
