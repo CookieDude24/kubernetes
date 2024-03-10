@@ -16,7 +16,7 @@
     - name: Enable CRB repository
       dnf:
         name: crb
-        state: enabled
+        state: present
 
     - name: Update all packages
       ansible.builtin.dnf:
