@@ -1,4 +1,4 @@
-- hosts: setup:&docker
+- hosts: almalinux:&docker
   become: yes
   tasks:
     - name: install Basic tools
