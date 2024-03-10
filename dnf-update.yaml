@@ -13,11 +13,6 @@
         name: epel-release
         state: present
 
-    - name: Enable CRB repository
-      dnf:
-        name: crb
-        state: present
-
     - name: Update all packages
       ansible.builtin.dnf:
         name: '*'
