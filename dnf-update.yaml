@@ -13,8 +13,8 @@
         name: epel-release
         state: present
 
-    - name: Ensure the crb repository is enabled
-      community.general.dnf_config_manager:
+    - name: Enable CRB repository
+      dnf:
         name: crb
         state: enabled
 
