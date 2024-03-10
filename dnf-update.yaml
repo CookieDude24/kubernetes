@@ -7,7 +7,7 @@
           - dnf-plugins-core
           - nano
         state: present
-        
+
     - name: Install epel-release
       dnf:
         name: epel-release
