@@ -1,11 +1,12 @@
 - hosts: almalinux:&docker
   become: yes
   tasks:
-  
+
     - name: ensure Docker repo is enabled
-      community.general.dnf_config_manager:
-        name: https://download.docker.com/linux/centos/docker-ce.repo
-        state: enabled 
+      ansible.builtin.yum_repository:
+        name: docker-ce
+        description: Docker-CE repo
+        baseurl: https://download.docker.com/linux/centos/docker-ce.repo
 
     - name: Install Docker and plugins
       dnf:
