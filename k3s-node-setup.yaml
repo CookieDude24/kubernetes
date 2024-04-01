@@ -15,8 +15,6 @@
           - curl
           - nfs-common
           - jq
-          - kubectl
-          - helm
         state: latest
 
     - name: start iscuzzy service
