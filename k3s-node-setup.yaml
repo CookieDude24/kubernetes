@@ -16,8 +16,8 @@
           - nfs-common
           - jq
         state: latest
-        
-    - name: Install foo
+
+    - name: Install all necessary snaps
       community.general.snap:
         name:
           - helm
