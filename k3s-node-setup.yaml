@@ -16,6 +16,7 @@
           - nfs-common
           - jq
         state: latest
+        
     - name: Install foo
       community.general.snap:
         name:
