@@ -1,0 +1,42 @@
+- hosts: ubuntu:&k3s
+  become: yes
+  tasks:
+    - name: update all packages
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 1800
+        name: "*"
+        state: latest
+    
+    - name: install all necessary packages
+      ansible.builtin.apt:
+        name: 
+          - open-iscsi
+          - findmnt
+          - awk
+          - grep
+          - blkid
+          - lsblk
+          - curl
+          - nfs-common
+          - jq
+          - kubectl
+          - helm
+        state: latest
+
+    - name: start iscuzzy service
+      ansible.builtin.systemd_service:
+        name: iscsid
+        state: started
+        enabled: true
+    
+    - name: check if a reboot is required.
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+        get_checksum: no
+      register: reboot_required_file
+
+    - name: reboot the server
+      ansible.builtin.reboot:
+      when: reboot_required_file.stat.exists == true
+    
