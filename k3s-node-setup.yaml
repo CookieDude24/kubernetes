@@ -12,11 +12,6 @@
       ansible.builtin.apt:
         name: 
           - open-iscsi
-          - findmnt
-          - awk
-          - grep
-          - blkid
-          - lsblk
           - curl
           - nfs-common
           - jq
