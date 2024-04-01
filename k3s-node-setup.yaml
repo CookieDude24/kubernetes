@@ -16,7 +16,13 @@
           - nfs-common
           - jq
         state: latest
-
+    - name: Install foo
+      community.general.snap:
+        name:
+          - helm
+          - kubectl
+        classic: true
+      
     - name: start iscuzzy service
       ansible.builtin.systemd_service:
         name: iscsid
