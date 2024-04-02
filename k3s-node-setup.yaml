@@ -15,6 +15,7 @@
           - curl
           - nfs-common
           - jq
+          - qemu-guest-agent
         state: latest
 
     - name: Install all necessary snaps
@@ -30,6 +31,12 @@
         state: started
         enabled: true
     
+    - name: start qemu agent
+      ansible.builtin.systemd_service:
+        name: qemu-guest-agent
+        state: started
+        enabled: true
+
     - name: check if a reboot is required.
       ansible.builtin.stat:
         path: /var/run/reboot-required
