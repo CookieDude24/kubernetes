@@ -1,12 +1,22 @@
 apiVersion: v2
-name: helm-guestbook
-description: A Helm chart for Sonarr
-
-type: application
-
-version: 0.1.0
-
-# This is the version number of the application being deployed. This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: "12.01.24"
+description: A common powered chart template. This can be useful for small projects that don't have their own chart.
+name: sonarr
+version: 3.1.0
+kubeVersion: ">=1.22.0-0"
+maintainers:
+  - name: bjw-s
+    email: me@bjw-s.dev
+dependencies:
+  - name: common
+    repository: https://bjw-s.github.io/helm-charts
+    version: 3.1.0
+annotations:
+  artifacthub.io/changes: |-
+    - kind: changed
+      description: |
+        Updated library version to 3.1.0.
+      links:
+        - name: Upgrade instructions from v2.x
+          url: https://bjw-s.github.io/helm-charts/docs/app-template/#from-2xx-to-30x
+        - name: Common library chart definition
+          url: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/Chart.yaml
