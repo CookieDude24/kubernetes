@@ -1,0 +1,29 @@
+controllers:
+  main:
+    containers:
+      main:
+        env:
+          TZ: Etc/UTC
+          # General config
+          UN_INTERVAL: 2m
+          UN_START_DELAY: 1m
+          UN_RETRY_DELAY: 5m
+          UN_MAX_RETRIES: 3
+          UN_PARALLEL: 1
+          UN_FILE_MODE: 0644
+          UN_DIR_MODE: 0755
+        image:
+          pullPolicy: Always
+          repository: ghcr.io/hotio/unpackerr
+          tag: latest
+    strategy: Recreate
+persistence:
+  config:
+    enabled: true
+    type: secret
+    name: sonarr-api-key
+  data:
+    enabled: true
+    path: /pool0/media/
+    server: nfs.home.007337.xyz
+    type: nfs
