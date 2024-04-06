@@ -14,7 +14,7 @@ ingress:
     hosts:
       - host: media.kube.007337.xyz
         paths:
-          - path: /jellyfin
+          - path: /
             pathType: Prefix
             service:
               identifier: main
