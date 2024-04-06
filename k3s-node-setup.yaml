@@ -16,6 +16,8 @@
           - nfs-common
           - jq
           - qemu-guest-agent
+          - keepalived
+          - haproxy
         state: latest
 
     - name: Install all necessary snaps
@@ -34,6 +36,18 @@
     - name: start qemu agent
       ansible.builtin.systemd_service:
         name: qemu-guest-agent
+        state: started
+        enabled: true
+
+    - name: start keepalived service
+      ansible.builtin.systemd_service:
+        name: keepalived
+        state: started
+        enabled: true
+
+    - name: start haproxy service
+      ansible.builtin.systemd_service:
+        name: haproxy
         state: started
         enabled: true
 
