@@ -4,7 +4,6 @@ controllers:
       main:
         env:
           TZ: Etc/UTC
-          JELLYFIN_PublishedServerUrl: media.kube.007337.xyz/jellyfin
         image:
           pullPolicy: Always
           repository: lscr.io/linuxserver/jellyfin
