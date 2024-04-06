@@ -1,0 +1,35 @@
+controllers:
+  main:
+    containers:
+      main:
+        env:
+          TZ: Etc/UTC
+        image:
+          pullPolicy: Always
+          repository: lscr.io/linuxserver/prowlarr
+          tag: latest
+    strategy: Recreate
+ingress:
+  main:
+    hosts:
+      - host: media.kube.007337.xyz
+        paths:
+          - path: /prowlarr
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+persistence:
+  config:
+    accessMode: ReadWriteOnce
+    globalMounts:
+      - path: /config
+    size: 1Gi
+    type: persistentVolumeClaim
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 9696
+    type: ClusterIP
