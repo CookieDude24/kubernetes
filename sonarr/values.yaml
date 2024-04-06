@@ -12,9 +12,9 @@ controllers:
 ingress:
   main:
     hosts:
-      - host: sonarr.kube.007337.xyz
+      - host: media.kube.007337.xyz
         paths:
-          - path: /
+          - path: /sonarr
             pathType: Prefix
             service:
               identifier: main
