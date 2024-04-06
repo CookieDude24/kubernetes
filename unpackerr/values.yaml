@@ -14,7 +14,7 @@ controllers:
           UN_DIR_MODE: 0755
         image:
           pullPolicy: Always
-          repository: ghcr.io/hotio/unpackerr
+          repository: golift/unpackerr
           tag: latest
     strategy: Recreate
 persistence:
