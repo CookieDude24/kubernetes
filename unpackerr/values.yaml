@@ -2,6 +2,9 @@ controllers:
   main:
     containers:
       main:
+        envFrom:
+          - configMapRef:
+              name: arr-secrets
         env:
           TZ: Etc/UTC
           # General config
@@ -13,7 +16,10 @@ controllers:
           UN_FILE_MODE: 0644
           UN_DIR_MODE: 0755
           UN_SONARR_0_URL: https://media.kube.007337.xyz/sonarr
-          UN_SONARR_0_API_KEY: "/config/sonarr-api-key"
+          UN_SONARR_0_API_KEY:
+            valueFrom:
+              name: arr-secrets
+              key: sonarr-api-key
           UN_SONARR_0_PATHS_0: /data/downloads
           UN_SONARR_0_PROTOCOLS: torrent
           UN_SONARR_0_TIMEOUT: 10s
@@ -28,7 +34,7 @@ persistence:
   config:
     enabled: true
     type: secret
-    name: sonarr-api-key
+    name: arr-secrets
   data:
     enabled: true
     path: /pool0/media/
