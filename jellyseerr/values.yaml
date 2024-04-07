@@ -12,17 +12,13 @@ controllers:
 ingress:
   main:
     hosts:
-      - host: media.007337.xyz
+      - host: jellyseerr.kube.007337.xyz
         paths:
           - path: /
             pathType: Prefix
             service:
               identifier: main
               port: http
-    tls:
-      - secretName: media-007337-xyz
-        hosts:
-          - media.007337.xyz
 persistence:
   config:
     existingClaim: jellyseerr-config
