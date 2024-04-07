@@ -4,9 +4,6 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.23.11-debian"
 
-nameOverride: ""
-fullnameOverride: ""
-
 # If this option is set to false a StateFulset instead of a Deployment is used
 useDeploy: true
 
