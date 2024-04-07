@@ -1,0 +1,60 @@
+image:
+  repository: louislam/uptime-kuma
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "1.23.11-debian"
+
+nameOverride: ""
+fullnameOverride: ""
+
+# If this option is set to false a StateFulset instead of a Deployment is used
+useDeploy: true
+
+podEnv:
+  # a default port must be set. required by container
+  - name: "UPTIME_KUMA_PORT"
+    value: "3001"
+
+service:
+  #  type: ClusterIP
+  type: LoadBalancer
+  port: 3001
+  nodePort:
+  annotations: { }
+
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+  hosts:
+    - host: uptime.007337.xyz
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.uptime-kuma.rule=Host(`uptime.007337.xyz`)"
+    - "traefik.http.routers.uptime-kuma.entrypoints=https"
+    - "traefik.http.routers.uptime-kuma.tls=true"
+    - "traefik.http.routers.uptime-kuma.tls.certresolver=letsencrypt-prod"
+    - "traefik.http.services.uptime-kuma.loadBalancer.server.port=3001"
+
+livenessProbe:
+  enabled: true
+  timeoutSeconds: 2
+  initialDelaySeconds: 15
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+
+volume:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 4Gi
+  storageClassName: longhorn
+
+strategy:
+  type: Recreate
