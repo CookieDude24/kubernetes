@@ -12,13 +12,17 @@ controllers:
 ingress:
   main:
     hosts:
-      - host: media.kube.007337.xyz
+      - host: media.007337.xyz
         paths:
           - path: /jellyfin
             pathType: Prefix
             service:
               identifier: main
               port: http
+    tls:
+      - secretName: media-007337-xyz
+        hosts:
+          - media.007337.xyz
 persistence:
   config:
     accessMode: ReadWriteOnce
