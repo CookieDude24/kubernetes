@@ -17,18 +17,11 @@ ingress:
             service:
               identifier: main
               port: http
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: main
-              port: websocket
 service:
   main:
     controller: main
     ports:
       http:
-        port: 3001
-      websocket:
         port: 3001
     type: ClusterIP
 persistence:
