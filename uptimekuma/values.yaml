@@ -17,6 +17,10 @@ ingress:
             service:
               identifier: main
               port: http
+    tls:
+      - secretName: uptime-007337-xyz
+        hosts:
+          - uptime.007337.xyz
 service:
   main:
     controller: main
