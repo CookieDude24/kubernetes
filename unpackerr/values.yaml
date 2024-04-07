@@ -2,39 +2,20 @@ controllers:
   main:
     containers:
       main:
-        envFrom:
-          - configMapRef:
-              name: arr-secrets
         env:
           TZ: Etc/UTC
-          # General config
-          UN_INTERVAL: 2m
-          UN_START_DELAY: 1m
-          UN_RETRY_DELAY: 5m
-          UN_MAX_RETRIES: 3
-          UN_PARALLEL: 1
-          UN_FILE_MODE: 0644
-          UN_DIR_MODE: 0755
-          UN_SONARR_0_URL: https://media.kube.007337.xyz/sonarr
-          UN_SONARR_0_API_KEY:
-            valueFrom:
-              name: arr-secrets
-              key: sonarr-api-key
-          UN_SONARR_0_PATHS_0: /data/downloads
-          UN_SONARR_0_PROTOCOLS: torrent
-          UN_SONARR_0_TIMEOUT: 10s
-          UN_SONARR_0_DELETE_ORIG: false
-          UN_SONARR_0_DELETE_DELAY: 5m
         image:
           pullPolicy: Always
-          repository: golift/unpackerr
+          repository: ghcr.io/hotio/unpackerr
           tag: latest
     strategy: Recreate
 persistence:
   config:
-    enabled: true
-    type: secret
-    name: arr-secrets
+    accessMode: ReadWriteOnce
+    globalMounts:
+      - path: /config
+    size: 1Gi
+    type: persistentVolumeClaim
   data:
     enabled: true
     path: /pool0/media/
