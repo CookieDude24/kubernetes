@@ -16,30 +16,17 @@ podEnv:
     value: "3001"
 
 service:
-  #  type: ClusterIP
-  type: LoadBalancer
+  type: ClusterIP
   port: 3001
-  nodePort:
-  annotations: { }
 
 ingress:
   enabled: true
   className: "traefik"
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
   hosts:
     - host: uptime.007337.xyz
       paths:
         - path: /
           pathType: ImplementationSpecific
-
-  labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.uptime-kuma.rule=Host(`uptime.007337.xyz`)"
-    - "traefik.http.routers.uptime-kuma.entrypoints=https"
-    - "traefik.http.routers.uptime-kuma.tls=true"
-    - "traefik.http.routers.uptime-kuma.tls.certresolver=letsencrypt-prod"
-    - "traefik.http.services.uptime-kuma.loadBalancer.server.port=3001"
 
 livenessProbe:
   enabled: true
