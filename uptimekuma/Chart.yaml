@@ -1,14 +1,22 @@
 apiVersion: v2
-appVersion: "1.23.11"
-deprecated: false
-description: A self-hosted Monitoring tool like "Uptime-Robot".
-home: https://github.com/dirsigler/uptime-kuma-helm
-icon: https://raw.githubusercontent.com/louislam/uptime-kuma/master/public/icon.png
+description: A common powered chart template. This can be useful for small projects that don't have their own chart.
+name: app-template
+version: 3.1.0
+kubeVersion: ">=1.22.0-0"
 maintainers:
-  - name: dirsigler
-    email: dennis@irsigler.dev
-name: uptime-kuma
-sources:
-  - https://github.com/louislam/uptime-kuma
-type: application
-version: 2.18.0
+  - name: bjw-s
+    email: me@bjw-s.dev
+dependencies:
+  - name: common
+    repository: https://bjw-s.github.io/helm-charts
+    version: 3.1.0
+annotations:
+  artifacthub.io/changes: |-
+    - kind: changed
+      description: |
+        Updated library version to 3.1.0.
+      links:
+        - name: Upgrade instructions from v2.x
+          url: https://bjw-s.github.io/helm-charts/docs/app-template/#from-2xx-to-30x
+        - name: Common library chart definition
+          url: https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/Chart.yaml

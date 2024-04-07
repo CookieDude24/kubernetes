@@ -1,47 +1,40 @@
-image:
-  repository: louislam/uptime-kuma
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.23.11-debian"
-
-nameOverride: ""
-fullnameOverride: ""
-
-# If this option is set to false a StateFulset instead of a Deployment is used
-useDeploy: true
-
-podEnv:
-  # a default port must be set. required by container
-  - name: "UPTIME_KUMA_PORT"
-    value: "3001"
-
-service:
-  type: ClusterIP
-  port: 3001
-
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          pullPolicy: Always
+          repository: louislam/uptime-kuma
+          tag: 1
+    strategy: Recreate
 ingress:
-  enabled: true
-  className: "traefik"
-  hosts:
-    - host: uptime.007337.xyz
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-
-livenessProbe:
-  enabled: true
-  timeoutSeconds: 2
-  initialDelaySeconds: 15
-
-readinessProbe:
-  enabled: true
-  initialDelaySeconds: 5
-
-volume:
-  enabled: true
-  accessMode: ReadWriteOnce
-  size: 4Gi
-  storageClassName: longhorn
-
-strategy:
-  type: Recreate
+  main:
+    hosts:
+      - host: uptime.007337.xyz
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: http
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: main
+              port: websocket
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 3001
+      websocket:
+        port: 3001
+    type: ClusterIP
+persistence:
+  app:
+    accessMode: ReadWriteOnce
+    globalMounts:
+      - path: /app/data
+    size: 5Gi
+    type: persistentVolumeClaim
