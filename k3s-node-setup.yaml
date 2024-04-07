@@ -1,0 +1,50 @@
+- hosts: ubuntu:&k3s
+  become: yes
+  tasks:
+    - name: update all packages
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 1800
+        name: "*"
+        state: latest
+    
+    - name: install all necessary packages
+      ansible.builtin.apt:
+        name: 
+          - open-iscsi
+          - curl
+          - nfs-common
+          - jq
+          - qemu-guest-agent
+          - linux-crashdump
+        state: latest
+
+    - name: Install all necessary snaps
+      community.general.snap:
+        name:
+          - helm
+          - kubectl
+        classic: true
+      
+    - name: start iscuzzy service
+      ansible.builtin.systemd_service:
+        name: iscsid
+        state: started
+        enabled: true
+    
+    - name: start qemu agent
+      ansible.builtin.systemd_service:
+        name: qemu-guest-agent
+        state: started
+        enabled: true
+
+    - name: check if a reboot is required.
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+        get_checksum: no
+      register: reboot_required_file
+
+    - name: reboot the server
+      ansible.builtin.reboot:
+      when: reboot_required_file.stat.exists == true
+    
