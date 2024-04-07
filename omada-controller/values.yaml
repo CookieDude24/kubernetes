@@ -42,8 +42,6 @@ service:
     controller: main
     ports:
       http:
-        port: 8080
-      manage-http-port:
         port:  8088
       manage-https-port:
         port:  8043
