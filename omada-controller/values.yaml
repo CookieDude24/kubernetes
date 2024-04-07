@@ -78,6 +78,6 @@ persistence:
   logs:
     accessMode: ReadWriteOnce
     globalMounts:
-      - path: /opt/tplink/EAPController/data
+      - path: /opt/tplink/EAPController/logs
     size: 5Gi
     type: persistentVolumeClaim
