@@ -16,6 +16,7 @@
           - nfs-common
           - jq
           - qemu-guest-agent
+          - linux-crashdump
         state: latest
 
     - name: Install all necessary snaps
