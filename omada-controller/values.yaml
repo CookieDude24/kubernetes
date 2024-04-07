@@ -7,7 +7,7 @@ controllers:
           PGID: 508
           MANAGE_HTTP_PORT: 8088
           MANAGE_HTTPS_PORT: 8043
-          PORTAL_HTTP_PORT: 8088
+          PORTAL_HTTP_PORT: 8888
           PORTAL_HTTPS_PORT: 8843
           PORT_APP_DISCOVERY: 27001
           PORT_ADOPT_V1: 29812
@@ -48,7 +48,7 @@ service:
       manage-https-port:
         port:  8043
       portal-http-port:
-        port:  8088
+        port:  8888
       portal-https-port:
         port:  8843
       port-app-discovery:
