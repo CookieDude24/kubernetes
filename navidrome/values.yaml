@@ -4,7 +4,7 @@ controllers:
       main:
         env:
           TZ: Etc/UTC
-          ND-BASEURL: /navidrome
+          ND-BASEURL: ""
           ND_SCANSCHEDULE: 1h
           ND_LOGLEVEL: info
           ND_SESSIONTIMEOUT: 24h
