@@ -28,12 +28,12 @@ ingress:
         hosts:
           - media.007337.xyz
 persistence:
-  config:
+  data:
     accessMode: ReadWriteOnce
     enabled: true
     size: 5Gi
     type: persistentVolumeClaim
-  data:
+  music:
     enabled: true
     path: /pool0/media/music
     server: nfs.home.007337.xyz
