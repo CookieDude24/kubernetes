@@ -30,7 +30,7 @@ service:
     type: ClusterIP
 persistence:
   app:
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     globalMounts:
       - path: /app/data
     size: 5Gi
