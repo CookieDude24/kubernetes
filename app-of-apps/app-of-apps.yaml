@@ -2,11 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: app-of-apps
-  project: default
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   source:
     path: kubernetes
+    targetRevision: HEAD
     repoURL: https://github.com/CookieDude24/kubernetes.git
+  project: default
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
