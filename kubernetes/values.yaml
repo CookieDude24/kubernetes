@@ -9,7 +9,3 @@ spec:
       prune: true
       selfHeal: true
   project:  default
-  certificates:
-    enabled: true
-  unpackerr:
-    enabled: true
