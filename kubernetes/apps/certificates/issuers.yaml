@@ -1,0 +1,53 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: cloudflare-api-key
+  namespace: cert-manager
+spec:
+  encryptedData:
+    api-key: AgBuhfKiPiXTYj+y+RRylhIFwVuedzrcGHbrSZa+mRKrTAZzeNg4kNqXgnJ6qGiN0phG9tXdyfmEWPx8cH8BarGk/7TyunrwrPDPW55BmAE8Gyv5GGH3ApD8qAeaqNi9ZVTGmZaT+R5LUYKA59vBHdov57nqGcHoxGoI9WO5lI8bbtloDcmmkvnilaP3bRF+3eAkhZe3AT3zq7E1JxXVHd7jEg5Q0zzBr5pYLMDrdTGbjYHT4WVc6AYZlMQEK5TtDolLqBVCCRAlUr03lhH3kULhvzGp/x3Z1N0Crmk3h/fp5f9l1f+TnZrlr7Yu6nApn47KYuGWps0O9vNae3EFyxb9NYhvUqrgqCGnk1frJxvsUGtS185g2P9YET7QlCaPsXa8IRDyqMYthx9TtvG1uscsYrzewtGSEpugszX8lmQG9oziORA1U74P5b8mbvbb6dNmRuDjQ19742I7DWBU/fskD7+Aq5B+h1ozfU16B+cpx7KwnjZWaS/CojzEbochpea5qQtYD1Sbx0zpkhG17NhoghVd3e895KP+hjouK2NJSAbcoIkCBUOQcC+qvLWaUNyN2GZw16imqSAzJzOh7Pidlzhsd29YPCIamYNQhNlcLnp1mOQjSl6DxOAK/a8Hb+3YhvaX+yGrlASPGVpUsYUt0QY2hM/aA/yGvhSKi6ppJvh569Kyt7xPmW1lPuq0F/DUYmJI7p71ITaJVq3VXqcceFwUgzNu+/AeE94wL56QCGvcI/drCYwG
+  template:
+    metadata:
+      creationTimestamp: null
+      name: cloudflare-api-key
+      namespace: cert-manager
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email:
+    privateKeySecretRef:
+      name: letsencrypt-production
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              key: api-key
+              name: cloudflare-api-key
+            email: maxidorninger@gmail.com
+        selector:
+          dnsZones: ["007337.xyz"]
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email:
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    solvers:
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              key: api-key
+              name: cloudflare-api-key
+            email: maxidorninger@gmail.com
+        selector:
+          dnsZones: ["007337.xyz"]
