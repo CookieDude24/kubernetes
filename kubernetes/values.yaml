@@ -11,3 +11,5 @@ spec:
   project:  default
   certificates:
     enabled: true
+  unpackerr:
+    enabled: true
