@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     proxmox = {
-      source = "registry.terraform.io/providers/Telmate/proxmox"
+      source = "registry.terraform.io/Telmate/proxmox"
       #latest version as of Nov 30 2022
       version = "3.0.1-rc1"
     }
