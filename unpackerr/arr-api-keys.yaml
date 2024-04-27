@@ -1,0 +1,14 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: arr-api-keys
+  namespace: arr
+spec:
+  encryptedData:
+    mysecret.yaml: AgCOfWrNS2zVuMU85mvchbBbkW2JsJfWuNZP6es8R5D7bj0ceh6sPUsuqEglNYTKV1S4IMXX5R4yr6ytrFjws/Xakb7LMYqcLyxShvvQj6iBcTT03bj7ajK5AWQYizs+WVO7c/sOmCXcoUnxOu4FisWGITA5XTNpUyXQRMcSNA4ZKftssQB3UCF+IbxOUcqQ3ChZ5OIgJVAgkhQhVbGJYqz4TiOUa2MqDSqf8OH/Z1ektT5UZMQTMMnyJXL9s+eSF+PRQD7RjUNxw1RgHE3mZxWgh+X87YeAFj31lgBU6bYiS/QAe1n3RaOhWoaYSmjy/d8FOagFWbrqUBXLxm5WuGEDr7laKMW6eciDCUPHH9idajh6NcsV4XucHN3VUXrz0lMUoPny2DlESe07VoiKrSyFjlfPOUXF0HjExE60W1TWCPLReY3Tc2bFJi6aAwtMYDkY+RMMTpNpEM4hS7ijGy7Fwl7F9wRaHrqP1TFjvwdcG9joiIFoNX0GmsBblbsITvjhSYOrUQiQ7C9nyElUX2F5ijgIgF/FgsXXbsDmSIMeLh8cWkHxkRKcj0Ij+kRHTpOEBd2GgT19TsZR7PEgYE3mdPI+wJFVUFSH/5QLj7dQ5pdNaDzfnFtRLm0HLDtTZIuxhMUKb+4DEnYgHCOd6LEI/KHnZSedXyEjXEe5WTm0eXSva7LFLRLCIENSSOL6VZ3mGxzSfufmzaMLmiohVh7F5GPQuiAAjHYjl+AwbOJWt5+vfNDOtacL4vE77jNLvdofq9Ho/5a8n9l5sO2ge+CTdwivi2RBRKYHAnEyHlcPeWOlmXV4KOqmJTyTO/IyZa2ynPGsHgkWxfFqFhOLvBQITuZl8Bmo77iu0dE5mLsKMBW1mz7M4TNnczg3ZKCi5gbo4jfzX7atplgnkGhGHcgD4fi6OGqQDQYHGmYe0hQ3A0QILqbRmqUQds00ic4lY0LuHhdoew==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: arr-api-keys
+      namespace: arr
