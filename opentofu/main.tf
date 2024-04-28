@@ -21,7 +21,7 @@ provider "proxmox" {
 
 # Creates a proxmox_vm_qemu entity named blog_demo_test
 resource "proxmox_vm_qemu" "blog_demo_test" {
-  name = "test_vm${count.index + 1}" # count.index starts at 0
+  name = "test-vm${count.index + 1}" # count.index starts at 0
   #name = "test-vm-01"
   count = 1 # Establishes how many instances will be created
   target_node = var.proxmox_host
@@ -42,16 +42,16 @@ resource "proxmox_vm_qemu" "blog_demo_test" {
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
 
-  disk {
-    slot = 0
-    size = "50G"
-    type = "scsi"
-    storage = "disk-images" # Name of storage local to the host you are spinning the VM up on
-    # Enables SSD emulation
-    ssd = 0
-    # Enables thin-provisioning
-    discard = "on"
-    #iothread = 1
+  disks {
+    scsi {
+      scsi0 {
+        disk {
+          size    = 50
+          storage = "disk-images" # Name of storage local to the host you are spinning the VM up on
+          emulatessd = true
+        }
+      }
+    }
   }
 
   network {

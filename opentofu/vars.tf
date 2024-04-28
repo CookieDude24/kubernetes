@@ -18,7 +18,7 @@ variable "nic_name" {
 #It is safe to default to setting this as the URL for what you used
 #as your `proxmox_host`, although they can be different
 variable "api_url" {
-  default = "https://home.007337.xyz:8006/api2/json"
+  default = "https://pve1.home.007337.xyz:8006/api2/json"
 }
 #Blank var for use by terraform.tfvars
 variable "token_secret" {
