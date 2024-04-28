@@ -27,7 +27,7 @@ variable "token_secret" {
 variable "token_id" {
 }
 variable "iso_storage_pool" {
-  default = "local"
+  default = "disk-images"
 }
 variable "vm_name" {
   default = "k3s"

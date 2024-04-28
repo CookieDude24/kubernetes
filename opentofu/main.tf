@@ -21,7 +21,12 @@ provider "proxmox" {
 
 # Creates a proxmox_vm_qemu entity named blog_demo_test
 resource "proxmox_vm_qemu" "k3s-node" {
+  depends_on = [
+    proxmox_cloud_init_disk.ci,
+  ]
+
   count = var.node_count
+
   name = "k3s-${count.index}"
   target_node = var.proxmox_host
 
@@ -43,6 +48,8 @@ resource "proxmox_vm_qemu" "k3s-node" {
   bios = "ovmf"
   onboot = true
   searchdomain = "home.007337.xyz"
+  ciuser = "ansible"
+  ipconfig0 = ""
 
   disks {
     scsi {
@@ -60,6 +67,15 @@ resource "proxmox_vm_qemu" "k3s-node" {
           emulatessd = true
         }
       }
+      scsi2 {
+        disk {
+          type    = "scsi"
+          media   = "cdrom"
+          storage = var.iso_storage_pool
+          volume  = proxmox_cloud_init_disk.ci.id
+          size    = proxmox_cloud_init_disk.ci.size
+        }
+      }
     }
   }
 
@@ -74,10 +90,21 @@ resource "proxmox_vm_qemu" "k3s-node" {
       network,
     ]
   }
-  cicustom = <<EOT
-#cloud-config
-hostname: ${var.vm_name}-${count.index}
-manage_etc_hosts: true
+}
+resource "proxmox_cloud_init_disk" "ci" {
+  count = var.node_count
+
+  name      = "k3s-${count.index}"
+  pve_node  = var.proxmox_host
+  storage   = var.iso_storage_pool
+
+
+  meta_data = yamlencode({
+    instance_id    = sha1("k3s-${count.index}")
+    local-hostname = "k3s-${count.index}"
+  })
+
+  user_data = <<EOT
 users:
   - name: maxid
     gecos: Maximilian Dorninger
@@ -91,25 +118,19 @@ users:
       - gh: CookieDude24
     sudo: ALL=(ALL) NOPASSWD:ALL
     lock_passwd: true
-package_upgrade: true
-package_reboot_if_required: true
-locale: de_AT.UTF-8
-timezone: Europe/Vienna
-runcmd:
-  - systemctl reload ssh
-packages:
-  - qemu-guest-agent
-  - wget
-  - nano
-network:
-  version: 2
-  ethernets:
-    eth0:
-      addresses:
-        - 192.168.1.20${count.index}/24
-      gateway4: 192.168.1.1
-      nameserver:
-        search: [home.007337.xyz]
-        addresses: [192.168.1.100]
 EOT
+
+  network_config = yamlencode({
+    version = 1
+    config = [{
+      type = "physical"
+      name = "eth0"
+      subnets = [{
+        type            = "static"
+        address         = "192.168.1.13${count.index}/24"
+        gateway         = "192.168.1.1"
+        dns_nameservers = ["192.168.1.100"]
+      }]
+    }]
+  })
 }
