@@ -21,10 +21,6 @@ provider "proxmox" {
 
 # Creates a proxmox_vm_qemu entity named blog_demo_test
 resource "proxmox_vm_qemu" "k3s-node" {
-  depends_on = [
-    proxmox_cloud_init_disk.ci,
-  ]
-
   count = var.node_count
 
   name = "k3s-${count.index}"
@@ -48,8 +44,13 @@ resource "proxmox_vm_qemu" "k3s-node" {
   bios = "ovmf"
   onboot = true
   searchdomain = "home.007337.xyz"
+
   ciuser = "ansible"
-  ipconfig0 = ""
+  sshkeys = <<EOF
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDgq7HJ804vAIZASgucY+3sImXqgwCOo4/126vTnrf2+WFtjx3MOosIDfIJDFKkChN7BlUxfj47JAXeoToTAam9pDcGpiO4e4Sd3gu7SPYKsA9AfGmZGSHDm4DTwVws/qwUyBg41UWX8bAIqRt5+6vkMXA9sdpLwh7pCBMv3m73mGEx7rYriYcmJzbw+52NMKv7il7hnrksLSVcJEz2PS0rstKHLRD8xRZuK25Ox0ZTTj4D8+Oon8EA6uYQmN3adK0I2BJMisvuJxRfIhvW4tEMfz7z+Pqls8peluCdOtoZSVkKTS5zvNLyMnn8SAxkRCMUF/pb6xkF1Q5yX+IWvwD4LSv7gm+uGL6iM72cVBZ5ZgqHtZBZ82alfymIFG+Cg+mVmgaG2ggymTa8geJPrnzviHdmQDxLvf04ifDf54xBa61+/EVC69SN4Z4/iNXbU6NsloJOBDePuWcLKC/wtmUtpWbgIDD+iMOdGJhxw0Lh6zxbk/ZDJuBrGUcIWgGWRtc= root@ansibleSemaphore
+EOF
+  ipconfig0 = "ip=192.168.1.13${count.index}/24,gw=192.168.1.1,"
+  nameserver = "192.168.1.100"
 
   disks {
     scsi {
@@ -62,18 +63,9 @@ resource "proxmox_vm_qemu" "k3s-node" {
       }
       scsi1 {
         disk {
-          size    = 32
+          size       = 32
           storage = "disk-images" # Name of storage local to the host you are spinning the VM up on
           emulatessd = true
-        }
-      }
-      scsi2 {
-        disk {
-          type    = "scsi"
-          media   = "cdrom"
-          storage = var.iso_storage_pool
-          volume  = proxmox_cloud_init_disk.ci.id
-          size    = proxmox_cloud_init_disk.ci.size
         }
       }
     }
@@ -90,47 +82,4 @@ resource "proxmox_vm_qemu" "k3s-node" {
       network,
     ]
   }
-}
-resource "proxmox_cloud_init_disk" "ci" {
-  count = var.node_count
-
-  name      = "k3s-${count.index}"
-  pve_node  = var.proxmox_host
-  storage   = var.iso_storage_pool
-
-
-  meta_data = yamlencode({
-    instance_id    = sha1("k3s-${count.index}")
-    local-hostname = "k3s-${count.index}"
-  })
-
-  user_data = <<EOT
-users:
-  - name: maxid
-    gecos: Maximilian Dorninger
-    ssh_import_id:
-      - gh: CookieDude24
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    lock_passwd: true
-  - name: ansible
-    gecos: Ansible User
-    ssh_import_id:
-      - gh: CookieDude24
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    lock_passwd: true
-EOT
-
-  network_config = yamlencode({
-    version = 1
-    config = [{
-      type = "physical"
-      name = "eth0"
-      subnets = [{
-        type            = "static"
-        address         = "192.168.1.13${count.index}/24"
-        gateway         = "192.168.1.1"
-        dns_nameservers = ["192.168.1.100"]
-      }]
-    }]
-  })
 }
