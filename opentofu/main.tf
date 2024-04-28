@@ -40,6 +40,9 @@ resource "proxmox_vm_qemu" "k3s-node" {
   memory = 6144
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
+  bios = "ovmf"
+  onboot = true
+  searchdomain = "home.007337.xyz"
 
   disks {
     scsi {
@@ -71,22 +74,7 @@ resource "proxmox_vm_qemu" "k3s-node" {
       network,
     ]
   }
-
-}
-
-resource "proxmox_cloud_init_disk" "ci" {
-  count = var.node_count
-
-  name = "${var.vm_name}-${count.index}"
-  pve_node  = var.proxmox_host
-  storage   = var.iso_storage_pool
-
-  meta_data = yamlencode({
-    instance_id    = sha1("${var.vm_name}-${count.index + 1}")
-    local-hostname = "${var.vm_name}-${count.index + 1}"
-  })
-
-  user_data = <<EOT
+  cicustom = <<EOT
 #cloud-config
 hostname: ${var.vm_name}-${count.index}
 manage_etc_hosts: true
@@ -113,19 +101,15 @@ packages:
   - qemu-guest-agent
   - wget
   - nano
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - 192.168.1.20${count.index}/24
+      gateway4: 192.168.1.1
+      nameserver:
+        search: [home.007337.xyz]
+        addresses: [192.168.1.100]
 EOT
-
-  network_config = yamlencode({
-    version = 1
-    config = [{
-      type = "physical"
-      name = "eth0"
-      subnets = [{
-        type            = "static"
-        address         = "192.168.1.20${count.index + 1}/24"
-        gateway         = "192.168.1.1"
-        dns_nameservers = ["192.168.1.100"]
-      }]
-    }]
-  })
 }
