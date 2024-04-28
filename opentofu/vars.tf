@@ -8,7 +8,7 @@ variable "proxmox_host" {
 }
 #Specify which template name you'd like to use
 variable "template_name" {
-  default = "testTemplate"
+  default = "fedora-cloud-template"
 }
 #Establish which nic you would like to utilize
 variable "nic_name" {
@@ -25,4 +25,13 @@ variable "token_secret" {
 }
 #Blank var for use by terraform.tfvars
 variable "token_id" {
+}
+variable "iso_storage_pool" {
+  default = "local"
+}
+variable "vm_name" {
+  default = "k3s"
+}
+variable "node_count" {
+  default = 3
 }

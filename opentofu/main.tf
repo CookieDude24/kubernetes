@@ -20,10 +20,9 @@ provider "proxmox" {
 }
 
 # Creates a proxmox_vm_qemu entity named blog_demo_test
-resource "proxmox_vm_qemu" "blog_demo_test" {
-  name = "test-vm${count.index + 1}" # count.index starts at 0
-  #name = "test-vm-01"
-  count = 1 # Establishes how many instances will be created
+resource "proxmox_vm_qemu" "k3s-node" {
+  count = var.node_count
+  name = "k3s-${count.index}"
   target_node = var.proxmox_host
 
   # References our vars.tf file to plug in our template name
@@ -35,10 +34,10 @@ resource "proxmox_vm_qemu" "blog_demo_test" {
   # VM Settings. `agent = 1` enables qemu-guest-agent
   agent = 1
   os_type = "cloud-init"
-  cores = 2
+  cores = 4
   sockets = 1
   cpu = "host"
-  memory = 2048
+  memory = 6144
   scsihw = "virtio-scsi-pci"
   bootdisk = "scsi0"
 
@@ -46,7 +45,14 @@ resource "proxmox_vm_qemu" "blog_demo_test" {
     scsi {
       scsi0 {
         disk {
-          size    = 50
+          size    = 32
+          storage = "disk-images" # Name of storage local to the host you are spinning the VM up on
+          emulatessd = true
+        }
+      }
+      scsi1 {
+        disk {
+          size    = 32
           storage = "disk-images" # Name of storage local to the host you are spinning the VM up on
           emulatessd = true
         }
@@ -65,10 +71,61 @@ resource "proxmox_vm_qemu" "blog_demo_test" {
       network,
     ]
   }
-  #provisioner "local-exec" {
-  # Provisioner commands can be run here.
-  # We will use provisioner functionality to kick off ansible
-  # playbooks in the future
-  #command = "touch /home/tcude/test.txt"
-  #}
+
+}
+
+resource "proxmox_cloud_init_disk" "ci" {
+  count = var.node_count
+
+  name = "${var.vm_name}-${count.index}"
+  pve_node  = var.proxmox_host
+  storage   = var.iso_storage_pool
+
+  meta_data = yamlencode({
+    instance_id    = sha1("${var.vm_name}-${count.index + 1}")
+    local-hostname = "${var.vm_name}-${count.index + 1}"
+  })
+
+  user_data = <<EOT
+#cloud-config
+hostname: ${var.vm_name}-${count.index}
+manage_etc_hosts: true
+users:
+  - name: maxid
+    gecos: Maximilian Dorninger
+    ssh_import_id:
+      - gh: CookieDude24
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: true
+  - name: ansible
+    gecos: Ansible User
+    ssh_import_id:
+      - gh: CookieDude24
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: true
+package_upgrade: true
+package_reboot_if_required: true
+locale: de_AT.UTF-8
+timezone: Europe/Vienna
+runcmd:
+  - systemctl reload ssh
+packages:
+  - qemu-guest-agent
+  - wget
+  - nano
+EOT
+
+  network_config = yamlencode({
+    version = 1
+    config = [{
+      type = "physical"
+      name = "eth0"
+      subnets = [{
+        type            = "static"
+        address         = "192.168.1.20${count.index + 1}/24"
+        gateway         = "192.168.1.1"
+        dns_nameservers = ["192.168.1.100"]
+      }]
+    }]
+  })
 }
