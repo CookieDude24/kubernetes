@@ -9,7 +9,6 @@
           - nfs-common
           - jq
           - qemu-guest-agent
-          - linux-crashdump
           - snapd
         state: present
 
