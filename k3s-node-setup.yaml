@@ -9,15 +9,7 @@
           - nfs-utils
           - jq
           - qemu-guest-agent
-          - snapd
         state: present
-
-    - name: Install all necessary snaps
-      community.general.snap:
-        name:
-          - helm
-          - kubectl
-        classic: true
       
     - name: start iscuzzy service
       ansible.builtin.systemd_service:
