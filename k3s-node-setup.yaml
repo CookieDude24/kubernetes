@@ -27,7 +27,6 @@
       community.general.filesystem:
         fstype: ext4
         dev: /dev/sdb
-        opts: -cc
 
     - name: Mount sdb
       mount:
