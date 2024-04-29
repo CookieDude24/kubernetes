@@ -38,7 +38,7 @@
         - rebooting
 
   handlers:
-    - name: Reboot Almalinux
+    - name: rebooting
       ansible.builtin.reboot:
         msg: "Reboot initiated by Ansible"
         reboot_timeout: 3600
