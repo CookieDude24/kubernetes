@@ -1,15 +1,8 @@
-- hosts: ubuntu:&k3s
+- hosts: fedora:&k3s
   become: yes
   tasks:
-    - name: update all packages
-      ansible.builtin.apt:
-        update_cache: true
-        cache_valid_time: 1800
-        name: "*"
-        state: latest
-    
     - name: install all necessary packages
-      ansible.builtin.apt:
+      dnf:
         name: 
           - open-iscsi
           - curl
@@ -17,7 +10,8 @@
           - jq
           - qemu-guest-agent
           - linux-crashdump
-        state: latest
+          - snapd
+        state: present
 
     - name: Install all necessary snaps
       community.general.snap:
@@ -31,20 +25,36 @@
         name: iscsid
         state: started
         enabled: true
-    
+
     - name: start qemu agent
       ansible.builtin.systemd_service:
         name: qemu-guest-agent
         state: started
         enabled: true
 
-    - name: check if a reboot is required.
-      ansible.builtin.stat:
-        path: /var/run/reboot-required
-        get_checksum: no
-      register: reboot_required_file
+    - name: Create a ext4 filesystem on /dev/sdb1 and check disk blocks
+      community.general.filesystem:
+        fstype: ext4
+        dev: /dev/sdb
+        opts: -cc
 
-    - name: reboot the server
+    - name: Mount sdb
+      mount:
+        path: /var/longhorn
+        src: /dev/sdb
+        fstype: ext4
+        state: present
+
+    - name: reboot if requiered
+      ansible.builtin.command: needs-restarting -r
+      register: reboot_required
+      failed_when: false
+      changed_when: reboot_required.rc != 0
+      notify:
+        - rebooting
+
+  handlers:
+    - name: Reboot Almalinux
       ansible.builtin.reboot:
-      when: reboot_required_file.stat.exists == true
-    
+        msg: "Reboot initiated by Ansible"
+        reboot_timeout: 3600

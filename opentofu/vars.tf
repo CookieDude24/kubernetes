@@ -4,7 +4,7 @@ variable "ssh_key" {
 }
 #Establish which Proxmox host you'd like to spin a VM up on
 variable "proxmox_host" {
-  default = "pve1"
+  default = "pve"
 }
 #Specify which template name you'd like to use
 variable "template_name" {
@@ -34,4 +34,7 @@ variable "vm_name" {
 }
 variable "node_count" {
   default = 3
+}
+variable "storage" {
+  default = local
 }

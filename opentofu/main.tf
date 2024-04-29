@@ -24,7 +24,8 @@ resource "proxmox_vm_qemu" "k3s-node" {
   count = var.node_count
 
   name = "k3s-${count.index}"
-  target_node = var.proxmox_host
+  target_node = "${var.proxmox_host}${count.index + 1}"
+  vmid = count.index + 300
 
   # References our vars.tf file to plug in our template name
   clone = var.template_name
@@ -57,14 +58,14 @@ EOF
       scsi0 {
         disk {
           size    = 32
-          storage = "disk-images" # Name of storage local to the host you are spinning the VM up on
+          storage = var.storage # Name of storage local to the host you are spinning the VM up on
           emulatessd = true
         }
       }
       scsi1 {
         disk {
-          size       = 32
-          storage = "disk-images" # Name of storage local to the host you are spinning the VM up on
+          size       = 128
+          storage = var.storage # Name of storage local to the host you are spinning the VM up on
           emulatessd = true
         }
       }
@@ -72,14 +73,22 @@ EOF
   }
 
   network {
+    id = 0
+    model = "virtio"
+    bridge = var.nic_name
+    firewall = false
+  }
+
+  network {
+    id = 1
     model = "virtio"
     bridge = var.nic_name
   }
 
-
-  lifecycle {
-    ignore_changes = [
-      network,
+  provisioner "remote-exec" {
+    inline = [
+      "ip a"
     ]
   }
+
 }
