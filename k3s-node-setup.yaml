@@ -10,12 +10,6 @@
           - jq
           - qemu-guest-agent
         state: present
-      
-    - name: start iscuzzy service
-      ansible.builtin.systemd_service:
-        name: iscsid
-        state: started
-        enabled: true
 
     - name: start qemu agent
       ansible.builtin.systemd_service:
