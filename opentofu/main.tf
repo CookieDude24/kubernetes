@@ -73,14 +73,12 @@ EOF
   }
 
   network {
-    id = 0
     model = "virtio"
     bridge = var.nic_name
     firewall = false
   }
 
   network {
-    id = 1
     model = "virtio"
     bridge = var.nic_name
   }
