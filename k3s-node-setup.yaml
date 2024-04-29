@@ -1,4 +1,4 @@
-- hosts: fedora:&k3s
+- hosts: almalinux:&k3s
   become: yes
   tasks:
     - name: install all necessary packages
