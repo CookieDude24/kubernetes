@@ -35,3 +35,6 @@ variable "vm_name" {
 variable "node_count" {
   default = 3
 }
+variable "storage" {
+  default = "local"
+}
