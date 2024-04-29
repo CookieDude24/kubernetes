@@ -4,9 +4,9 @@
     - name: install all necessary packages
       dnf:
         name: 
-          - open-iscsi
+          - iscsi-initiator-utils
           - curl
-          - nfs-common
+          - nfs-utils
           - jq
           - qemu-guest-agent
           - snapd
