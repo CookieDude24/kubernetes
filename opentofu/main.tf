@@ -85,10 +85,5 @@ EOF
     bridge = var.nic_name
   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "ip a"
-    ]
-  }
 
 }
