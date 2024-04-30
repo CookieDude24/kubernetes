@@ -1,5 +1,7 @@
 frontend k3s-frontend
   bind *:6443
+  bind *:443
+  bind *:80
   mode tcp
   option tcplog
   default_backend k3s-backend

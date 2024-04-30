@@ -22,6 +22,20 @@
       ansible.builtin.dnf:
         autoremove: yes
 
+    - name: Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
+      ansible.builtin.user:
+        name: maxid
+        shell: /bin/bash
+        groups: wheel
+        append: yes
+
+    - name: Set authorized keys taken from url
+      ansible.posix.authorized_key:
+        user: maxid
+        state: present
+        key: https://github.com/CookieDude24.keys
+
+
     - name: reboot if requiered
       ansible.builtin.command: needs-restarting -r
       register: reboot_required
