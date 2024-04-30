@@ -47,6 +47,7 @@ resource "proxmox_vm_qemu" "k3s-node" {
   searchdomain = "home.007337.xyz"
 
   ciuser = "ansible"
+  cloudinit_cdrom_storage = var.storage
   sshkeys = <<EOF
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDgq7HJ804vAIZASgucY+3sImXqgwCOo4/126vTnrf2+WFtjx3MOosIDfIJDFKkChN7BlUxfj47JAXeoToTAam9pDcGpiO4e4Sd3gu7SPYKsA9AfGmZGSHDm4DTwVws/qwUyBg41UWX8bAIqRt5+6vkMXA9sdpLwh7pCBMv3m73mGEx7rYriYcmJzbw+52NMKv7il7hnrksLSVcJEz2PS0rstKHLRD8xRZuK25Ox0ZTTj4D8+Oon8EA6uYQmN3adK0I2BJMisvuJxRfIhvW4tEMfz7z+Pqls8peluCdOtoZSVkKTS5zvNLyMnn8SAxkRCMUF/pb6xkF1Q5yX+IWvwD4LSv7gm+uGL6iM72cVBZ5ZgqHtZBZ82alfymIFG+Cg+mVmgaG2ggymTa8geJPrnzviHdmQDxLvf04ifDf54xBa61+/EVC69SN4Z4/iNXbU6NsloJOBDePuWcLKC/wtmUtpWbgIDD+iMOdGJhxw0Lh6zxbk/ZDJuBrGUcIWgGWRtc= root@ansibleSemaphore
 EOF
@@ -110,6 +111,7 @@ resource "proxmox_vm_qemu" "haproxy-node" {
   searchdomain = "home.007337.xyz"
 
   ciuser = "ansible"
+  cloudinit_cdrom_storage = var.storage
   sshkeys = <<EOF
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDgq7HJ804vAIZASgucY+3sImXqgwCOo4/126vTnrf2+WFtjx3MOosIDfIJDFKkChN7BlUxfj47JAXeoToTAam9pDcGpiO4e4Sd3gu7SPYKsA9AfGmZGSHDm4DTwVws/qwUyBg41UWX8bAIqRt5+6vkMXA9sdpLwh7pCBMv3m73mGEx7rYriYcmJzbw+52NMKv7il7hnrksLSVcJEz2PS0rstKHLRD8xRZuK25Ox0ZTTj4D8+Oon8EA6uYQmN3adK0I2BJMisvuJxRfIhvW4tEMfz7z+Pqls8peluCdOtoZSVkKTS5zvNLyMnn8SAxkRCMUF/pb6xkF1Q5yX+IWvwD4LSv7gm+uGL6iM72cVBZ5ZgqHtZBZ82alfymIFG+Cg+mVmgaG2ggymTa8geJPrnzviHdmQDxLvf04ifDf54xBa61+/EVC69SN4Z4/iNXbU6NsloJOBDePuWcLKC/wtmUtpWbgIDD+iMOdGJhxw0Lh6zxbk/ZDJuBrGUcIWgGWRtc= root@ansibleSemaphore
 EOF
