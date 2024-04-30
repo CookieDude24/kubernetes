@@ -146,7 +146,10 @@ EOF
   }
 
   provisioner "local-exec" {
-    command = "dnf install -y haproxy && dnf install -y keepalived"
+    command = "dnf install -y haproxy"
+  }
+  provisioner "local-exec" {
+    command = "dnf install -y keepalived"
   }
   provisioner "file" {
     source = "haproxy/haproxy.cfg.tf"
