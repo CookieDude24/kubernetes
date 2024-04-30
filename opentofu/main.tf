@@ -144,29 +144,4 @@ EOF
     model = "virtio"
     bridge = var.nic_name
   }
-
-  provisioner "local-exec" {
-    command = "dnf install -y haproxy"
-    interpreter = ["/bin/bash", "-c"]
-  }
-  provisioner "local-exec" {
-    command = "dnf install -y keepalived"
-    interpreter = ["/bin/bash", "-c"]
-  }
-  provisioner "file" {
-    source = "haproxy/haproxy.cfg.tf"
-    destination = "/etc/haproxy/"
-  }
-  provisioner "file" {
-    source = "haproxy/keepalived${count.index}.conf.tf"
-    destination = "/etc/keepalived/"
-  }
-  provisioner "local-exec" {
-    command = "cat /etc/haproxy/haproxy.cfg.tf >> /etc/haproxy/haproxy.cfg"
-    interpreter = ["/bin/bash", "-c"]
-  }
-  provisioner "local-exec" {
-    command = "cat /etc/keepalived/keepalived.conf.tf >> /etc/keepalived/keepalived.conf"
-    interpreter = ["/bin/bash", "-c"]
-  }
 }
