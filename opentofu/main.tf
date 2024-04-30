@@ -44,6 +44,8 @@ resource "proxmox_vm_qemu" "k3s-node" {
   bootdisk = "scsi0"
   bios = "ovmf"
   onboot = true
+  machine = "q35"
+  qemu_os = "Linux"
   searchdomain = "home.007337.xyz"
 
   ciuser = "ansible"
