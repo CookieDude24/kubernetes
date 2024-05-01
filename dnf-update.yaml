@@ -23,12 +23,20 @@
       ansible.builtin.dnf:
         autoremove: yes
 
-    - name: Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
+    - name: Add the user maxid
       ansible.builtin.user:
         name: maxid
         shell: /bin/bash
         groups: wheel
         append: yes
+
+    - name: Allow the bob user to run any commands as alice with sudo -u alice
+      community.general.sudoers:
+        name: maxid-sudo
+        state: present
+        user: maxid
+        commands: ALL
+        nopassword: true
 
     - name: Set authorized keys taken from url
       ansible.posix.authorized_key:
