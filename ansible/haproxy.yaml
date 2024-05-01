@@ -15,6 +15,18 @@
         state: started
         enabled: true
 
+    - name: enable and start haproxy
+      ansible.builtin.service:
+        name: haproxy
+        state: started
+        enabled: yes
+
+    - name: enable and start keepalived
+      ansible.builtin.service:
+        name: keepalived
+        state: started
+        enabled: yes
+
     - name: reboot if requiered
       ansible.builtin.command: needs-restarting -r
       register: reboot_required
