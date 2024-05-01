@@ -35,6 +35,7 @@
         user: maxid
         state: present
         key: https://github.com/CookieDude24.keys
+        path: /home/maxid/.ssh/authorized_keys
 
 
     - name: reboot if requiered
