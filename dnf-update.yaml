@@ -34,7 +34,7 @@
       ansible.posix.authorized_key:
         user: maxid
         state: present
-        key: https://github.com/CookieDude24.keys
+        key: "{{ lookup('url', 'https://github.com/CookieDude24.keys', split_lines=False) }}"
         path: /home/maxid/.ssh/authorized_keys
 
 
