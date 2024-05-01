@@ -1,4 +1,4 @@
-- hosts: almalinux:&haproxy
+- hosts: fedora:&haproxy
   become: yes
   tasks:
     - name: install all necessary packages
