@@ -87,7 +87,7 @@ data:
   # Directory path that contains additional static assets
   server.staticassets: "/shared/app"
   # The maximum number of retries for each request
-  server.k8sclient.retry.max: "0"
+  server.k8sclient.retry.max: ""
   # The initial backoff delay on the first retry attempt in ms. Subsequent retries will double this backoff time up to a maximum threshold
   server.k8sclient.retry.base.backoff: "100"
   # Semicolon-separated list of content types allowed on non-GET requests. Set an empty string to allow all. Be aware
