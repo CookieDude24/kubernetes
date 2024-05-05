@@ -18,3 +18,5 @@ spec:
     automated:
       prune: {{ .Values.spec.automated.prune }}
       selfHeal: {{ .Values.spec.automated.selfHeal }}
+    syncOptions:
+      - {{ .Values.spec.syncOptions }}
