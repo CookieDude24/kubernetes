@@ -9,7 +9,7 @@ spec:
   destination:
     namespace: cert-manager
     server: {{ .Values.spec.destination.server }}
-  project: infrastructure
+  project: default
   source:
     chart: cert-manager
     helm:
