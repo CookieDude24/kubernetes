@@ -28,7 +28,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`kube.007337.xyz`) && PathPrefix(`/api`) || Host(`kube.007337.xyz`) && PathPrefix(`/dashboard`)
+      match: Host(`traefik.kube.007337.xyz`)
       services:
         - name: traefik-dashboard
           port: 9000
