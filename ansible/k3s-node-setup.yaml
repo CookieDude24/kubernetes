@@ -9,6 +9,7 @@
           - nfs-utils
           - jq
           - qemu-guest-agent
+          - dnf-utils
         state: present
 
     - name: start qemu agent
