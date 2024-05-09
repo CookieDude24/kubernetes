@@ -12,3 +12,7 @@ spec:
     path: kubernetes/infrastructure/argocd
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
+  syncPolicy:
+    automated:
+      prune: {{ .Values.spec.automated.prune }}
+      selfHeal: {{ .Values.spec.automated.selfHeal }}
