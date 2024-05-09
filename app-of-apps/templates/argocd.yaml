@@ -6,13 +6,9 @@ metadata:
 spec:
   destination:
     namespace: argocd
-    server: {{ .Values.spec.destination.server }}
+    server: https://kubernetes.default.svc
   project: default
   source:
     path: kubernetes/infrastructure/argocd
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
-  syncPolicy:
-    automated:
-      prune: {{ .Values.spec.automated.prune }}
-      selfHeal: {{ .Values.spec.automated.selfHeal }}
+    repoURL: https://github.com/CookieDude24/kubernetes.git
+    targetRevision: HEAD
