@@ -16,3 +16,10 @@ spec:
       services:
         - name: longhorn-frontend
           port: 80
+    - kind: Rule
+      match: Host(`longhorn.kube.007337.xyz`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      priority: 15
+      services:
+        - kind: Service
+          name: ak-outpost-k3s-proxy-outpost
+          port: 9000
