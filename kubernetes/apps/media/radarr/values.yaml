@@ -8,20 +8,6 @@ controllers:
           pullPolicy: Always
           repository: lscr.io/linuxserver/radarr
           tag: latest
-ingress:
-  main:
-    hosts:
-      - host: media.007337.xyz
-        paths:
-          - path: /radarr
-            pathType: Prefix
-            service:
-              identifier: main
-              port: http
-    tls:
-      - secretName: media-007337-xyz
-        hosts:
-          - media.007337.xyz
 persistence:
   config:
     accessMode: ReadWriteOnce
@@ -36,7 +22,6 @@ persistence:
     type: nfs
 service:
   main:
-    nameOverride: "radarr"
     controller: main
     ports:
       http:
