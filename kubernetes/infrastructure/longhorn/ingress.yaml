@@ -12,7 +12,7 @@ spec:
       match: Host(`longhorn.kube.007337.xyz`)
       middlewares:
         - name: authentik
-          namespace: kube-system
+          namespace: longhorn-system
       services:
         - name: longhorn-frontend
           port: 80
