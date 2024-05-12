@@ -11,17 +11,19 @@ spec:
     - kind: Rule
       {{- with (index .Values.ingress.main.hosts 0) }}
       match: Host(`{{ .host }}`)
+      {{- end }}
       middlewares:
         - name: authentik
           namespace: media
       services:
-        - name: {{ .Values.service.main.nameOverride }}-service
+        - name: "{{ .Values.service.main.nameOverride }}-service"
           port: {{ .Values.service.main.ports.http.port }}
     - kind: Rule
+      {{- with (index .Values.ingress.main.hosts 0) }}
       match: Host(`{{ .host }}`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      {{- end }}
       priority: 15
       services:
         - kind: Service
           name: ak-outpost-k3s-proxy-outpost
           port: 9000
-{{- end }}
