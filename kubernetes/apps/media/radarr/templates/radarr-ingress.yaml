@@ -14,7 +14,7 @@ spec:
         - name: authentik
           namespace: {{ .Release.Namespace }}
       services:
-        - name: "{{ .Release.Name }}-service"
+        - name: {{ .Release.Name }}
           port: {{ .Values.service.main.ports.http.port }}
     - kind: Rule
       match: Host(`{{ .Release.Name }}.media.007337.xyz`) && PathPrefix(`/outpost.goauthentik.io/`)"
