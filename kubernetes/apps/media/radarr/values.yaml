@@ -1,3 +1,10 @@
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: &port 7878
+    type: ClusterIP
 controllers:
   main:
     containers:
@@ -7,7 +14,46 @@ controllers:
         image:
           pullPolicy: Always
           repository: lscr.io/linuxserver/radarr
-          tag: latest
+          tag: 20.03.24
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              type: HTTP
+              spec:
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: *port
+
+            readiness:
+              enabled: true
+              custom: true
+              type: HTTP
+              spec:
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+                failureThreshold: 3
+                httpGet:
+                  path: /
+                  port: *port
+
+            startup:
+              enabled: true
+              custom: false
+              type: HTTP
+              spec:
+                initialDelaySeconds: 0
+                timeoutSeconds: 1
+                periodSeconds: 5
+                failureThreshold: 30
+                httpGet:
+                  path: /
+                  port: *port
 persistence:
   config:
     accessMode: ReadWriteOnce
@@ -20,10 +66,4 @@ persistence:
     path: /pool0/media/
     server: nfs.home.007337.xyz
     type: nfs
-service:
-  main:
-    controller: main
-    ports:
-      http:
-        port: 7878
-    type: ClusterIP
+
