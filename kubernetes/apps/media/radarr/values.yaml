@@ -8,7 +8,6 @@ controllers:
           pullPolicy: Always
           repository: lscr.io/linuxserver/radarr
           tag: latest
-    strategy: Recreate
 ingress:
   main:
     hosts:
@@ -37,6 +36,7 @@ persistence:
     type: nfs
 service:
   main:
+    nameOverride: "radarr"
     controller: main
     ports:
       http:
