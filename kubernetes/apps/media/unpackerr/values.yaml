@@ -4,14 +4,14 @@ controllers:
       main:
         env:
           TZ: Etc/UTC
-          UN_SONARR_0_URL: https://media.007337.xyz/sonarr
+          UN_SONARR_0_URL: http://sonarr.media.svc.cluster.local:8989
           UN_SONARR_0_API_KEY:
             valueFrom:
               secretKeyRef:
                 name: arr-api-keys
                 key: sonarr-api-key
           UN_SONARR_0_PATHS_0: /data/downloads
-          UN_RADARR_0_URL: https://media.007337.xyz/radarr
+          UN_RADARR_0_URL: http://radarr.media.svc.cluster.local:7878
           UN_RADARR_0_API_KEY:
             valueFrom:
               secretKeyRef:
