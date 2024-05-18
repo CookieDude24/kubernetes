@@ -44,6 +44,8 @@ controllers:
           QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
           QBT_Preferences__WebUI__AuthSubnetWhitelist: "192.168.1.0/24"
           QBT_Preferences__WebUI__LocalHostAuth: false
+          QBT_Preferences__Scheduler__end_time: '@Variant(\0\0\0\xf\x5%q\xa0)'
+          QBT_Preferences__Scheduler__start_time: '@Variant(\0\0\0\xf\x1\xee\x62\x80)'
           QBT_BitTorrent__Session__AlternativeGlobalDLSpeedLimit: '1250'
           QBT_BitTorrent__Session__AlternativeGlobalUPSpeedLimit: '600'
           QBT_BitTorrent__Session__GlobalDLSpeedLimit: '10000'
