@@ -1,17 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cloudnative-pg
+  name: certificates
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-  project: default
-  sources:
-    - chart: cloudnative-pg
-      repoURL: https://cloudnative-pg.github.io/charts
-      targetRevision: 0.21.2
   destination:
+    namespace: cert-manager
     server: {{ .Values.spec.destination.server }}
-    namespace: database
+  project: default
+  source:
+    path: kubernetes/apps/postgresql
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+  syncPolicy:
+    automated:
+      prune: {{ .Values.spec.automated.prune }}
+      selfHeal: {{ .Values.spec.automated.selfHeal }}
