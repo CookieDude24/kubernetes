@@ -46,10 +46,12 @@ controllers:
           QBT_Preferences__WebUI__LocalHostAuth: false
           QBT_BitTorrent__Session__AlternativeGlobalDLSpeedLimit: '1250'
           QBT_BitTorrent__Session__AlternativeGlobalUPSpeedLimit: '600'
+          QBT_BitTorrent__Session__GlobalDLSpeedLimit: '10000'
+          QBT_BitTorrent__Session__GlobalUDSpeedLimit: '1200'
           QBT_BitTorrent__Session__BandwidthSchedulerEnabled: true
           QBT_BitTorrent__Session__DefaultSavePath: '/data/downloads'
-          QBT_BitTorrent__Session__GlobalDLSpeedLimit: '10000'
           QBT_BitTorrent__Session__GlobalMaxInactiveSeedingMinutes: '131400'
+          QBT_BitTorrent__Session__IgnoreSlowTorrentsForQueueing: true
           QBT_BitTorrent__Session__MaxActiveDownloads: '10'
           QBT_BitTorrent__Session__MaxActiveTorrents: '1000'
           QBT_BitTorrent__Session__MaxActiveUploads: '15'
