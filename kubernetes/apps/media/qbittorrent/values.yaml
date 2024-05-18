@@ -5,6 +5,7 @@ service:
       http:
         port: &port 8080
         protocol: HTTP
+    nameOverride: qbittorrent
   bittorrent:
     enabled: true
     controller: main
