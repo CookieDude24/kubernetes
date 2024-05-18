@@ -40,18 +40,14 @@ controllers:
           TZ: Etc/UTC
           QBITTORRENT__PORT: *port
           QBITTORRENT__BT_PORT: *bt-port
-          QBT_Preferences__WebUI__AlternativeUIEnabled: false
           QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
-          QBT_Preferences__WebUI__AuthSubnetWhitelist: "192.168.1.0/24"
+          QBT_Preferences__WebUI__AuthSubnetWhitelist: '192.168.1.0/24'
           QBT_Preferences__WebUI__LocalHostAuth: false
-          QBT_Preferences__Scheduler__end_time: '@Variant(\0\0\0\xf\x5%q\xa0)'
-          QBT_Preferences__Scheduler__start_time: '@Variant(\0\0\0\xf\x1\xee\x62\x80)'
           QBT_BitTorrent__Session__AlternativeGlobalDLSpeedLimit: '1250'
           QBT_BitTorrent__Session__AlternativeGlobalUPSpeedLimit: '600'
           QBT_BitTorrent__Session__GlobalDLSpeedLimit: '10000'
           QBT_BitTorrent__Session__GlobalUDSpeedLimit: '1200'
           QBT_BitTorrent__Session__BandwidthSchedulerEnabled: true
-          QBT_BitTorrent__Session__DefaultSavePath: '/data/downloads'
           QBT_BitTorrent__Session__GlobalMaxInactiveSeedingMinutes: '131400'
           QBT_BitTorrent__Session__IgnoreSlowTorrentsForQueueing: true
           QBT_BitTorrent__Session__MaxActiveDownloads: '10'
@@ -60,6 +56,7 @@ controllers:
           QBT_BitTorrent__Session__MaxConnections: '1000'
           QBT_BitTorrent__Session__MaxRatioAction: '3'
           QBT_BitTorrent__Session__QueueingSystemEnabled: true
+          QBT_BitTorrent__Session__DefaultSavePath: '/data/downloads'
           QBT_BitTorrent__Session__TempPath: '/downloads/incomplete/'
           QBT_BitTorrent__Session__UseAlternativeGlobalSpeedLimit: true
           QBT_BitTorrent__Session__ValidateHTTPSTrackerCertificate: true
