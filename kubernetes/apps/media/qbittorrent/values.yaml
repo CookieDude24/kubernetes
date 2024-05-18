@@ -41,7 +41,7 @@ controllers:
           QBITTORRENT__PORT: *port
           QBITTORRENT__BT_PORT: *bt-port
           QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
-          QBT_Preferences__WebUI__AuthSubnetWhitelist: '192.168.1.0/24'
+          QBT_Preferences__WebUI__AuthSubnetWhitelist: '0.0.0.0/0'
           QBT_Preferences__WebUI__LocalHostAuth: false
           QBT_BitTorrent__Session__AlternativeGlobalDLSpeedLimit: '1250'
           QBT_BitTorrent__Session__AlternativeGlobalUPSpeedLimit: '600'
