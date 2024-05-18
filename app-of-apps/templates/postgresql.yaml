@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: certificates
+  name: postgresql
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: cert-manager
+    namespace: database
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
