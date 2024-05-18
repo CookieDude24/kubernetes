@@ -30,7 +30,7 @@ controllers:
                 key: sonarr-api-key
 
         image:
-          pullPolicy: Always
+          pullPolicy: IfNotPresent
           repository: ghcr.io/onedr0p/sonarr
           tag: 4.0.4.1668@sha256:0b89ee847f0b7e782386be22f964de18046e828c47d0d34eba5b3651c361eaa4
 
@@ -45,14 +45,14 @@ controllers:
               timeoutSeconds: 1
               failureThreshold: 3
               httpGet:
-                path: /ping
+                path: &path /ping
                 port: *port
 
           readiness: *probe
 
           startup:
             enabled: true
-            custom: false
+            custom: true
             type: HTTP
             spec:
               initialDelaySeconds: 0
@@ -60,9 +60,8 @@ controllers:
               periodSeconds: 5
               failureThreshold: 30
               httpGet:
-                path: /
+                path: *path
                 port: *port
-    strategy: Recreate
 
 persistence:
   data:

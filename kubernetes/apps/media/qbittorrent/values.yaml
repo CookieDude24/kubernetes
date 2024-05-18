@@ -65,7 +65,7 @@ controllers:
           repository: ghcr.io/onedr0p/qbittorrent
           tag: 4.6.4@sha256:b9af0f2173572a69d2c02eab8f701ef7b04f61689efe1c5338b96445d528dec4
         probes:
-          liveness:
+          liveness: &probe
             enabled: true
             custom: true
             type: HTTP
@@ -75,20 +75,22 @@ controllers:
               timeoutSeconds: 1
               failureThreshold: 3
               httpGet:
-                path: /
+                path: &path /api/v2/app/version
                 port: *port
 
-          readiness:
+          readiness: *probe
+
+          startup:
             enabled: true
             custom: true
             type: HTTP
             spec:
               initialDelaySeconds: 0
-              periodSeconds: 10
               timeoutSeconds: 1
-              failureThreshold: 3
+              periodSeconds: 5
+              failureThreshold: 30
               httpGet:
-                path: /
+                path: *path
                 port: *port
 
 persistence:

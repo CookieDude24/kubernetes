@@ -21,12 +21,19 @@ controllers:
       main:
         env:
           TZ: Etc/UTC
+          RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+          RADARR__AUTHENTICATION_METHOD: External
+          RADARR__API_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: arr-api-keys
+                key: radarr-api-key
         image:
-          pullPolicy: Always
+          pullPolicy: IfNotPresent
           repository: lscr.io/linuxserver/radarr
-          tag: latest
+          tag: 5.6.0.8846@sha256:b3137a2b451683d834627bf6997460f26eb864757b1ffb5eb6544a8ba6d432ef
           probes:
-            liveness:
+            liveness: &probe
               enabled: true
               custom: true
               type: HTTP
@@ -36,25 +43,14 @@ controllers:
                 timeoutSeconds: 1
                 failureThreshold: 3
                 httpGet:
-                  path: /
+                  path: &path /ping
                   port: *port
 
-            readiness:
-              enabled: true
-              custom: true
-              type: HTTP
-              spec:
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-                failureThreshold: 3
-                httpGet:
-                  path: /
-                  port: *port
+            readiness: *probe
 
             startup:
               enabled: true
-              custom: false
+              custom: true
               type: HTTP
               spec:
                 initialDelaySeconds: 0
@@ -62,7 +58,7 @@ controllers:
                 periodSeconds: 5
                 failureThreshold: 30
                 httpGet:
-                  path: /
+                  path: *path
                   port: *port
 persistence:
   data:
