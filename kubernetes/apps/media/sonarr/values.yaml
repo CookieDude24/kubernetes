@@ -7,16 +7,35 @@ service:
     type: ClusterIP
 controllers:
   main:
+    type: statefulset
+
+    statefulset:
+      volumeClaimTemplates:
+          - name: config
+            globalMounts:
+              - path: /config
+            storageClass: longhorn
+            accessMode: ReadWriteOnce
+            size: 1Gi
     containers:
       main:
         env:
           TZ: Etc/UTC
+          SONARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+          SONARR__AUTHENTICATION_METHOD: External
+          SONARR__API_KEY:
+            valueFrom:
+              secretKeyRef:
+                name: arr-api-keys
+                key: sonarr-api-key
+
         image:
           pullPolicy: Always
-          repository: lscr.io/linuxserver/sonarr
-          tag: latest
+          repository: ghcr.io/onedr0p/sonarr
+          tag: 4.0.4.1668@sha256:0b89ee847f0b7e782386be22f964de18046e828c47d0d34eba5b3651c361eaa4
+
         probes:
-          liveness:
+          liveness: &probe
             enabled: true
             custom: true
             type: HTTP
@@ -26,21 +45,10 @@ controllers:
               timeoutSeconds: 1
               failureThreshold: 3
               httpGet:
-                path: /
+                path: /ping
                 port: *port
 
-          readiness:
-            enabled: true
-            custom: true
-            type: HTTP
-            spec:
-              initialDelaySeconds: 0
-              periodSeconds: 10
-              timeoutSeconds: 1
-              failureThreshold: 3
-              httpGet:
-                path: /
-                port: *port
+          readiness: *probe
 
           startup:
             enabled: true
@@ -55,13 +63,8 @@ controllers:
                 path: /
                 port: *port
     strategy: Recreate
+
 persistence:
-  config:
-    accessMode: ReadWriteOnce
-    globalMounts:
-      - path: /config
-    size: 1Gi
-    type: persistentVolumeClaim
   data:
     enabled: true
     path: /pool0/media/
