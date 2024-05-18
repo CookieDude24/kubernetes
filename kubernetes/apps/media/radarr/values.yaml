@@ -30,7 +30,7 @@ controllers:
                 key: radarr-api-key
         image:
           pullPolicy: IfNotPresent
-          repository: lscr.io/linuxserver/radarr
+          repository: ghcr.io/onedr0p/radarr
           tag: 5.6.0.8846@sha256:b3137a2b451683d834627bf6997460f26eb864757b1ffb5eb6544a8ba6d432ef
           probes:
             liveness: &probe
