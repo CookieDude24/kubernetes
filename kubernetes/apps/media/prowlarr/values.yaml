@@ -6,6 +6,16 @@ service:
         port: &port 9696
     type: ClusterIP
 controllers:
+  type: statefulset
+
+  statefulset:
+    volumeClaimTemplates:
+      - name: config
+        globalMounts:
+          - path: /config
+        storageClass: longhorn
+        accessMode: ReadWriteOnce
+        size: 1Gi
   main:
     containers:
       main:
@@ -54,10 +64,3 @@ controllers:
               httpGet:
                 path: /
                 port: *port
-persistence:
-  config:
-    accessMode: ReadWriteOnce
-    globalMounts:
-      - path: /config
-    size: 1Gi
-    type: persistentVolumeClaim

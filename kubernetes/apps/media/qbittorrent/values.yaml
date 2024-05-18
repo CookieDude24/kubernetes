@@ -24,6 +24,16 @@ service:
         targetPort: 6881
 controllers:
   main:
+    type: statefulset
+
+    statefulset:
+      volumeClaimTemplates:
+        - name: config
+          globalMounts:
+            - path: /config
+          storageClass: longhorn
+          accessMode: ReadWriteOnce
+          size: 1Gi
     containers:
       main:
         env:
@@ -61,11 +71,6 @@ controllers:
                 port: *port
 
 persistence:
-  config:
-    accessMode: ReadWriteMany
-    enabled: true
-    size: 1Gi
-    type: persistentVolumeClaim
   data:
     enabled: true
     path: /pool0/media/
