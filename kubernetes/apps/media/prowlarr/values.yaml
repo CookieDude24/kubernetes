@@ -7,20 +7,25 @@ service:
     type: ClusterIP
 controllers:
   main:
-    type: statefulset
-
-    statefulset:
-      volumeClaimTemplates:
-        - name: config
-          globalMounts:
-            - path: /config
-          storageClass: longhorn
-          accessMode: ReadWriteOnce
-          size: 1Gi
-    securityContext:
-      runAsUser: 1001
-      fsGroup: 1001
     containers:
+      type: statefulset
+
+      statefulset:
+        volumeClaimTemplates:
+          - name: config
+            globalMounts:
+              - path: /config
+            storageClass: longhorn
+            accessMode: ReadWriteOnce
+            size: 1Gi
+
+      pod:
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: &group 1001
+          fsGroup: *group
+          fsGroupChangePolicy: "OnRootMismatch"
+
       main:
         env:
           TZ: Etc/UTC
@@ -35,6 +40,7 @@ controllers:
           pullPolicy: IfNotPresent
           repository: ghcr.io/onedr0p/prowlarr
           tag: 1.17.2.4511
+
         probes:
           liveness: &probe
             enabled: true

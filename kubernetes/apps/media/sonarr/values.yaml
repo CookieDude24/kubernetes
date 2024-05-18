@@ -42,12 +42,6 @@ controllers:
           repository: ghcr.io/onedr0p/sonarr
           tag: 4.0.4
 
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-
         probes:
           liveness: &probe
             enabled: true

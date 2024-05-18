@@ -34,6 +34,7 @@ controllers:
           storageClass: longhorn
           accessMode: ReadWriteOnce
           size: 1Gi
+
     containers:
       main:
         env:
