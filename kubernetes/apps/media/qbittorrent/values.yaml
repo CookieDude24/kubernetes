@@ -14,14 +14,14 @@ service:
     ports:
       bittorrent-tcp:
         enabled: true
-        port: 6881
+        port: &bt-port 6881
         protocol: TCP
-        targetPort: 6881
+        targetPort: *bt-port
       bittorrent-udp:
         enabled: true
-        port: 6881
+        port: *bt-port
         protocol: UDP
-        targetPort: 6881
+        targetPort: *bt-port
 controllers:
   main:
     type: statefulset
@@ -38,11 +38,31 @@ controllers:
       main:
         env:
           TZ: Etc/UTC
-          WEBUI_PORT: *port
+          QBITTORRENT__PORT: *port
+          QBITTORRENT__BT_PORT: *bt-port
+          QBT_Preferences__WebUI__AlternativeUIEnabled: false
+          QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
+          QBT_Preferences__WebUI__AuthSubnetWhitelist: "192.168.1.0/24"
+          QBT_Preferences__WebUI__LocalHostAuth: false
+          QBT_BitTorrent__Session__AlternativeGlobalDLSpeedLimit: '1250'
+          QBT_BitTorrent__Session__AlternativeGlobalUPSpeedLimit: '600'
+          QBT_BitTorrent__Session__BandwidthSchedulerEnabled: true
+          QBT_BitTorrent__Session__DefaultSavePath: '/data/downloads'
+          QBT_BitTorrent__Session__GlobalDLSpeedLimit: '10000'
+          QBT_BitTorrent__Session__GlobalMaxInactiveSeedingMinutes: '131400'
+          QBT_BitTorrent__Session__MaxActiveDownloads: '10'
+          QBT_BitTorrent__Session__MaxActiveTorrents: '1000'
+          QBT_BitTorrent__Session__MaxActiveUploads: '15'
+          QBT_BitTorrent__Session__MaxConnections: '1000'
+          QBT_BitTorrent__Session__MaxRatioAction: '3'
+          QBT_BitTorrent__Session__QueueingSystemEnabled: true
+          QBT_BitTorrent__Session__TempPath: '/downloads/incomplete/'
+          QBT_BitTorrent__Session__UseAlternativeGlobalSpeedLimit: true
+          QBT_BitTorrent__Session__ValidateHTTPSTrackerCertificate: true
         image:
-          pullPolicy: Always
-          repository: lscr.io/linuxserver/qbittorrent
-          tag: latest
+          pullPolicy: IfNotPresent
+          repository: ghcr.io/onedr0p/qbittorrent
+          tag: 4.6.4@sha256:b9af0f2173572a69d2c02eab8f701ef7b04f61689efe1c5338b96445d528dec4
         probes:
           liveness:
             enabled: true
