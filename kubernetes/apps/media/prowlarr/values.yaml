@@ -39,7 +39,7 @@ controllers:
         image:
           pullPolicy: IfNotPresent
           repository: ghcr.io/onedr0p/prowlarr
-          tag: 1.17.2.4511
+          tag: rolling
 
         probes:
           liveness: &probe
