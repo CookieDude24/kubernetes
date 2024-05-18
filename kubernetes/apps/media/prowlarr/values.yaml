@@ -17,6 +17,9 @@ controllers:
           storageClass: longhorn
           accessMode: ReadWriteOnce
           size: 1Gi
+    securityContext:
+      runAsUser: 1001
+      fsGroup: 1001
     containers:
       main:
         env:
