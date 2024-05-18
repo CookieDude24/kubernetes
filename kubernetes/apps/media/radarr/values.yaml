@@ -36,38 +36,40 @@ controllers:
               secretKeyRef:
                 name: arr-api-keys
                 key: radarr-api-key
+
         image:
           pullPolicy: IfNotPresent
           repository: ghcr.io/onedr0p/radarr
           tag: 5.6.0.8846
-          probes:
-            liveness: &probe
-              enabled: true
-              custom: true
-              type: HTTP
-              spec:
-                initialDelaySeconds: 0
-                periodSeconds: 10
-                timeoutSeconds: 1
-                failureThreshold: 3
-                httpGet:
-                  path: &path /ping
-                  port: *port
 
-            readiness: *probe
+        probes:
+          liveness: &probe
+            enabled: true
+            custom: true
+            type: HTTP
+            spec:
+              initialDelaySeconds: 0
+              periodSeconds: 10
+              timeoutSeconds: 1
+              failureThreshold: 3
+              httpGet:
+                path: &path /ping
+                port: *port
 
-            startup:
-              enabled: true
-              custom: true
-              type: HTTP
-              spec:
-                initialDelaySeconds: 0
-                timeoutSeconds: 1
-                periodSeconds: 5
-                failureThreshold: 30
-                httpGet:
-                  path: *path
-                  port: *port
+          readiness: *probe
+
+          startup:
+            enabled: true
+            custom: true
+            type: HTTP
+            spec:
+              initialDelaySeconds: 0
+              timeoutSeconds: 1
+              periodSeconds: 5
+              failureThreshold: 30
+              httpGet:
+                path: *path
+                port: *port
 persistence:
   data:
     enabled: true
