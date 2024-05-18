@@ -27,7 +27,7 @@ controllers:
       main:
         env:
           TZ: Etc/UTC
-          WEBUI_PORT: 8080
+          WEBUI_PORT: *port
         image:
           pullPolicy: Always
           repository: lscr.io/linuxserver/qbittorrent
@@ -59,18 +59,6 @@ controllers:
                 path: /
                 port: *port
 
-          startup:
-            enabled: true
-            custom: false
-            type: HTTP
-            spec:
-              initialDelaySeconds: 0
-              timeoutSeconds: 1
-              periodSeconds: 5
-              failureThreshold: 30
-              httpGet:
-                path: /
-                port: *port
 persistence:
   config:
     accessMode: ReadWriteMany
