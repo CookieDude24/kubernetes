@@ -78,10 +78,5 @@ persistence:
     path: /pool0/media/
     server: nfs.home.007337.xyz
     type: nfs
-  config:
-    accessMode: ReadWriteOnce
-    globalMounts:
-      - path: /config
-    size: 1Gi
-    type: persistentVolumeClaim
+
 
