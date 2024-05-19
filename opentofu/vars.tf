@@ -26,6 +26,8 @@ variable "token_secret" {
 #Blank var for use by terraform.tfvars
 variable "token_id" {
 }
+variable "fileserver-password" {
+}
 variable "iso_storage_pool" {
   default = "disk-images"
 }

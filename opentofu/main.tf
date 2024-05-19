@@ -86,3 +86,35 @@ EOF
     bridge = var.nic_name
   }
 }
+resource "proxmox_lxc" "fileserver" {
+  target_node = "${var.proxmox_host}1"
+  hostname     = "fileserver"
+  ostemplate   = "local:vztmpl/debian-11-turnkey-fileserver_17.1-1_amd64.tar.gz"
+  password     = var.fileserver-password
+  vmid = 200
+  unprivileged = false
+  onboot = true
+  ssh_public_keys = <<EOF
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBIJaW6sC97fG2jgkEBZM1C0ik0otmgHVQEBTvkC7Wjx maxidorninger@gmail.com
+EOF
+
+  rootfs {
+    storage = "disk-images"
+    size    = "8G"
+  }
+
+  mountpoint {
+    key     = "0"
+    slot    = 0
+    storage = "disk-images"
+    mp      = "/srv/storage"
+    size    = "1024G"
+  }
+
+  network {
+    name   = "eth0"
+    bridge = "vmbr0"
+    ip     = "192.168.1.89"
+    firewall = false
+  }
+}
