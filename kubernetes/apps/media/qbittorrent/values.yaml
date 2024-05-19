@@ -26,8 +26,6 @@ service:
         targetPort: *bt-port
 controllers:
   main:
-    type: statefulset
-
     containers:
       main:
         env:
