@@ -114,7 +114,7 @@ EOF
   network {
     name   = "eth0"
     bridge = "vmbr0"
-    ip     = "192.168.1.89"
+    ip     = "192.168.1.89/24"
     firewall = false
   }
 }
