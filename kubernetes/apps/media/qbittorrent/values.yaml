@@ -15,25 +15,18 @@ service:
       bittorrent-tcp:
         enabled: true
         port: &bt-port 6881
+        nodePort: *bt-port
         protocol: TCP
         targetPort: *bt-port
       bittorrent-udp:
         enabled: true
         port: *bt-port
+        nodePort: *bt-port
         protocol: UDP
         targetPort: *bt-port
 controllers:
   main:
     type: statefulset
-
-    statefulset:
-      volumeClaimTemplates:
-        - name: config
-          globalMounts:
-            - path: /config
-          storageClass: longhorn
-          accessMode: ReadWriteOnce
-          size: 1Gi
 
     containers:
       main:
@@ -95,6 +88,12 @@ controllers:
                 port: *port
 
 persistence:
+  config:
+    accessMode: ReadWriteOnce
+    globalMounts:
+      - path: /config
+    size: 1Gi
+    type: persistentVolumeClaim
   data:
     enabled: true
     path: /pool0/media/
