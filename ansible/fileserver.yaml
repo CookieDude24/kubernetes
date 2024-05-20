@@ -1,17 +1,15 @@
-- hosts: fedora:&k3s
+- hosts: fedora:&fileserver
   become: yes
   tasks:
     - name: install all necessary packages
       dnf:
-        name: 
-          - iscsi-initiator-utils
+        name:
           - curl
           - wget
           - nfs-utils
-          - jq
           - qemu-guest-agent
           - dnf-utils
-          - cryptsetup
+          - cockpit
         state: present
 
     - name: start qemu agent
@@ -27,7 +25,7 @@
 
     - name: Mount sdb
       mount:
-        path: /var/longhorn
+        path: /var/storage
         src: /dev/sdb
         fstype: ext4
         state: present
