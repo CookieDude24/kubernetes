@@ -59,13 +59,13 @@
         path: /var/storage
         owner: nobody
         group: nobody
-        mode: '0770'
+        mode: '0771'
 
     - name: Create media directory
       ansible.builtin.file:
         path: /var/storage/media
         state: directory
-        mode: '0770'
+        mode: '0775'
 
     - name: Create tv directory
       ansible.builtin.file:
