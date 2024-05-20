@@ -41,7 +41,6 @@ resource "proxmox_vm_qemu" "k3s-node" {
   cpu = "host"
   memory = 6144
   scsihw = "virtio-scsi-pci"
-  bootdisk = "scsi0"
   bios = "ovmf"
   onboot = true
   machine = "q35"
@@ -105,7 +104,6 @@ resource "proxmox_vm_qemu" "fileserver" {
   cpu = "host"
   memory = 4000
   scsihw = "virtio-scsi-pci"
-  bootdisk = "scsi0"
   bios = "ovmf"
   onboot = true
   machine = "q35"
