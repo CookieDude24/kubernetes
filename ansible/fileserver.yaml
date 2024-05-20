@@ -18,6 +18,30 @@
         state: started
         enabled: true
 
+    - name: start nfs-server
+      ansible.builtin.systemd_service:
+        name: nfs-server
+        state: started
+        enabled: true
+
+    - name: start rpcbind
+      ansible.builtin.systemd_service:
+        name: rpcbind
+        state: started
+        enabled: true
+
+    - name: start rpc-statd
+      ansible.builtin.systemd_service:
+        name: rpc-statd
+        state: started
+        enabled: true
+
+    - name: start nfs-idmapd
+      ansible.builtin.systemd_service:
+        name: nfs-idmapd
+        state: started
+        enabled: true
+
     - name: Create a ext4 filesystem on /dev/sdb1 and check disk blocks
       community.general.filesystem:
         fstype: ext4
@@ -29,6 +53,37 @@
         src: /dev/sdb
         fstype: ext4
         state: present
+
+    - name: Change file ownership, group and permissions
+      ansible.builtin.file:
+        path: /var/storage
+        owner: nobody
+        group: nobody
+        mode: '0770'
+
+    - name: Create media directory
+      ansible.builtin.file:
+        path: /var/storage/media
+        state: directory
+        mode: '0770'
+
+    - name: Create tv directory
+      ansible.builtin.file:
+        path: /var/storage/media/tv
+        state: directory
+        mode: '0777'
+
+    - name: Create movies directory
+      ansible.builtin.file:
+        path: /var/storage/media/movies
+        state: directory
+        mode: '0777'
+
+    - name: Create downloads directory
+      ansible.builtin.file:
+        path: /var/storage/media/downloads
+        state: directory
+        mode: '0777'
 
     - name: reboot if requiered
       ansible.builtin.command: needs-restarting -r

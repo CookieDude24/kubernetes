@@ -58,7 +58,7 @@ controllers:
 persistence:
   data:
     enabled: true
-    path: /pool0/media/
+    path: /var/storage/media/
     server: nfs.home.007337.xyz
     type: nfs
   cache:
@@ -67,4 +67,3 @@ persistence:
     globalMounts:
       - path: /config/cache
         readOnly: false
-
