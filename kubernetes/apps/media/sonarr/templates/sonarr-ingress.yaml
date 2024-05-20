@@ -10,7 +10,9 @@ spec:
   routes:
     - kind: Rule
       match: Host(`{{ .Release.Name }}.media.007337.xyz`)
-
+      middlewares:
+        - name: authentik
+          namespace: {{ .Release.Namespace }}
       services:
         - name: {{ .Release.Name }}
           port: {{ .Values.service.main.ports.http.port }}
