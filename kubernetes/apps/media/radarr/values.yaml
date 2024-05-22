@@ -74,6 +74,6 @@ persistence:
   data:
     enabled: true
     path: /var/storage/media/
-    server: nfs.home.007337.xyz
+    server: nfs.007337.xyz
     type: nfs
 
