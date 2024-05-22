@@ -17,7 +17,7 @@ metadata:
   name: snapshot-default-0
   namespace: longhorn-system
 spec:
-  cron: "0 3 * * 0,2,4,6"
+  cron: "0 0/2 1 * ?"
   task: "snapshot"
   groups:
     - default
