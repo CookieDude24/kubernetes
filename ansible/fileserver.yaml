@@ -85,6 +85,18 @@
         state: directory
         mode: '0777'
 
+    - name: Create backup directory
+      ansible.builtin.file:
+        path: /var/storage/backup
+        state: directory
+        mode: '0771'
+
+    - name: Create tv directory
+      ansible.builtin.file:
+        path: /var/storage/backup/longhorn
+        state: directory
+        mode: '0777'
+
     - name: reboot if requiered
       ansible.builtin.command: needs-restarting -r
       register: reboot_required
