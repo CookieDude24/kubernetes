@@ -16,11 +16,6 @@ spec:
       services:
         - name: semaphore
           port: 3000
-    - match: Host(`kube.007337.xyz`) && PathPrefix(`/api`)
-      kind: Rule
-      services:
-        - name: semaphore
-          port: 3000
 
 ---
 apiVersion: v1
