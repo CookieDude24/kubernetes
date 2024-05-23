@@ -21,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: seamphore
+  name: semaphore
   namespace: default
 spec:
   externalName: 192.168.1.85
