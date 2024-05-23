@@ -11,7 +11,7 @@ spec:
     - web
 
   routes:
-    - match: Host(`kube.007337.xyz`) && PathPrefix(`/semaphore`)
+    - match: Host(`ansible.007337.xyz`)
       kind: Rule
       services:
         - name: semaphore
