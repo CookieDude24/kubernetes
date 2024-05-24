@@ -11,11 +11,8 @@ spec:
     - web
 
   routes:
-    - match: Host(`media.007337.xyz`) && PathPrefix(`/photos`)
+    - match: Host(`immich.media.007337.xyz`)
       kind: Rule
-      middlewares:
-        - name: add-immich
-          namespace: media
       services:
         - name: immich
           port: 2283
@@ -31,14 +28,3 @@ spec:
   type: ExternalName
   ports:
     - port: 2283
-
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: add-immich
-  namespace: media
-spec:
-  stripPrefix:
-    prefixes:
-      - /photos
