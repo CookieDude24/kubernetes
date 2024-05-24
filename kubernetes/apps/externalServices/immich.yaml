@@ -39,5 +39,6 @@ metadata:
   name: add-immich
   namespace: media
 spec:
-  addPrefix:
-    prefix: /photos
+  stripPrefix:
+    prefixes:
+      - /photos
