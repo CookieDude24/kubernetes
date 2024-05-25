@@ -9,7 +9,7 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: Host(`kube.007337.xyz`)
+      match: Host(`kube.007337.xyz`) && PathPrefix(`/longhorn`)"
       middlewares:
         - name: authentik
           namespace: longhorn-system
