@@ -28,7 +28,7 @@ controllers:
           OIDC_PROVIDER_NAME: Authentik
           OIDC_AUTO_REDIRECT: true
           OIDC_GROUPS_CLAIM: groups
-          BASE_URL: https://mealie.007337.xyz
+          BASE_URL: mealie.007337.xyz
           MAX_WORKERS: 1
           WEB_CONCURRENCY: 1
         image:
