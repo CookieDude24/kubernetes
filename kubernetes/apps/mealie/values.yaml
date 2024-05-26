@@ -34,7 +34,7 @@ controllers:
         image:
           pullPolicy: IfNotPresent
           repository: ghcr.io/mealie-recipes/mealie
-          tag: v1.7.0
+          tag: nightly
         probes:
           probes:
             liveness: &probe
