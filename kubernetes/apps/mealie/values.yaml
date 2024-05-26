@@ -12,7 +12,6 @@ controllers:
       main:
         env:
           TZ: Europe/Vienna
-          ALLOW_SIGNUP: true
           OIDC_AUTH_ENABLED: true
           OIDC_SIGNUP_ENABLED: true
           OIDC_USER_GROUP: Users
