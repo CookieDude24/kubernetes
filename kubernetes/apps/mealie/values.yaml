@@ -47,7 +47,7 @@ controllers:
                 timeoutSeconds: 1
                 failureThreshold: 3
                 httpGet:
-                  path: &path /health
+                  path: &path /
                   port: *port
 
             readiness: *probe
