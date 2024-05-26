@@ -13,6 +13,7 @@ controllers:
         env:
           TZ: Europe/Vienna
           ALLOW_SIGNUP: true
+          LOG_LEVEL: debug
           OIDC_AUTH_ENABLED: true
           OIDC_SIGNUP_ENABLED: true
           OIDC_USER_GROUP: users
@@ -24,7 +25,6 @@ controllers:
                 name: mealie-authentik-sso-secret
                 key: client-id
           OIDC_REMEMBER_ME: true
-          OIDC_SIGNING_ALGORITHM: ES256
           OIDC_PROVIDER_NAME: Authentik
           OIDC_AUTO_REDIRECT: true
           OIDC_GROUPS_CLAIM: groups
