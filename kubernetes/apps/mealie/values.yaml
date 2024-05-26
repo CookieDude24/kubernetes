@@ -26,7 +26,7 @@ controllers:
                 key: client-id
           OIDC_REMEMBER_ME: true
           OIDC_PROVIDER_NAME: Authentik
-          OIDC_AUTO_REDIRECT: true
+          OIDC_AUTO_REDIRECT: false
           OIDC_GROUPS_CLAIM: groups
           BASE_URL: mealie.007337.xyz
           MAX_WORKERS: 1
