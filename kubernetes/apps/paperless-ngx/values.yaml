@@ -6,6 +6,7 @@ defaultPodOptions:
     fsGroupChangePolicy: "OnRootMismatch"
 service:
   main:
+    controller: main
     ports:
       http:
         port: 8000
