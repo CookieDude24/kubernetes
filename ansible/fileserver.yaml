@@ -16,7 +16,7 @@
           - nfs-utils
         state: present
 
-    - name: install all necessary packages for nfs
+    - name: install all necessary packages for smb
       dnf:
         name:
           - samba
@@ -152,5 +152,5 @@
 
     - name: restart samba
       service:
-        name: smb
+        name: smb.service
         state: restarted
