@@ -118,7 +118,7 @@ persistence:
     enabled: true
     existingClaim: paperless-pg-data
     globalMounts:
-      - path: /var/lib/postgresql
+      - path: /var/lib/postgresql/data
   nas-consume:
     enabled: true
     path: /var/storage/paperless/consume
