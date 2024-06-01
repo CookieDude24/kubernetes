@@ -37,9 +37,9 @@ controllers:
           PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
           PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
           PAPERLESS_TIME_ZONE: Europe/Vienna
-          PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "true"
+          PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
           PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "true"
-          PAPERLESS_DISABLE_REGULAR_LOGIN: "false"
+          PAPERLESS_DISABLE_REGULAR_LOGIN: "true"
           PAPERLESS_DBENGINE: postgresql
           PAPERLESS_DBHOST: localhost
 
