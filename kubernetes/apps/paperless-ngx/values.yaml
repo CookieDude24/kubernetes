@@ -22,6 +22,7 @@ controllers:
         env:
           PAPERLESS_URL: https://home.007337.xyz
           PAPERLESS_STATIC_URL: /paperless/
+          PAPERLESS_FORCE_SCRIPT_NAME: /paperless
           PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
           PAPERLESS_PORT: 8000
           PAPERLESS_CONSUMER_POLLING: 60
