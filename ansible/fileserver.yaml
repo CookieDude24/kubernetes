@@ -131,7 +131,7 @@
 
     - name: Configure smb.conf
       template:
-        src: smb.conf.j2
+        src: fileserver_samba_conf.conf
         dest: /etc/samba/smb.conf
       notify: reboot samba
 
