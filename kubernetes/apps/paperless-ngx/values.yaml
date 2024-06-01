@@ -28,9 +28,7 @@ controllers:
           PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
 
           PAPERLESS_CONSUMPTION_DIR: /data/fileserver/consume
-          PAPERLESS_DATA_DIR: /library/data
           PAPERLESS_EXPORT_DIR: /data/fileserver/export
-          PAPERLESS_MEDIA_ROOT: /library/media
 
           PAPERLESS_OCR_LANGUAGE: deu+eng
           PAPERLESS_REDIS: redis://localhost:6379
@@ -114,7 +112,8 @@ persistence:
     enabled: true
     existingClaim: paperless-library
     globalMounts:
-      - path: /library
+      - path: /usr/paperless/data
+      - path: /usr/paperless/media
   pg-data:
     enabled: true
     existingClaim: paperless-pg-data
