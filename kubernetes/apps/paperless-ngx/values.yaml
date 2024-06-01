@@ -31,7 +31,6 @@ controllers:
           PAPERLESS_DATA_DIR: /library/data
           PAPERLESS_EXPORT_DIR: /data/fileserver/export
           PAPERLESS_MEDIA_ROOT: /library/media
-          PAPERLESS_STATICDIR: /library/static
 
           PAPERLESS_OCR_LANGUAGE: deu+eng
           PAPERLESS_REDIS: redis://localhost:6379
