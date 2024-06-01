@@ -1,0 +1,27 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "{{ .Release.Name }}-ingress"
+  namespace: {{ .Release.Namespace }}
+spec:
+  entryPoints:
+    - websecure
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`home.007337.xyz`) && PathPrefix(`/paperless`)"
+      middlewares:
+        - name: authentik
+          namespace: kube-system
+        - name: httpcats
+          namespace: kube-system
+      services:
+        - name: {{ .Release.Name }}
+          port: {{ .Values.service.main.ports.http.port }}
+    - kind: Rule
+      match: Host(`paperless.007337.xyz`) && PathPrefix(`/paperless/outpost.goauthentik.io/`)"
+      priority: 15
+      services:
+        - kind: Service
+          name: ak-outpost-k3s-proxy-outpost
+          port: 9000

@@ -1,0 +1,131 @@
+defaultPodOptions:
+  securityContext:
+    runAsUser: 1001
+    runAsGroup: &group 1001
+    fsGroup: *group
+    fsGroupChangePolicy: "OnRootMismatch"
+service:
+  main:
+    ports:
+      http:
+        port: 8000
+controllers:
+  main:
+    strategy: Recreate
+    containers:
+      main:
+        order: 2
+        image:
+          repository: ghcr.io/paperless-ngx/paperless-ngx
+          tag: 2.8.6
+        env:
+          PAPERLESS_URL: https://home.007337.xyz
+          PAPERLESS_STATIC_URL: /paperless/
+          PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+          PAPERLESS_PORT: 8000
+          PAPERLESS_CONSUMER_POLLING: 60
+          PAPERLESS_CONSUMER_RECURSIVE: "true"
+          PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+          PAPERLESS_CONSUMPTION_DIR: /data/fileserver/consume
+          PAPERLESS_DATA_DIR: /library/data
+          PAPERLESS_EXPORT_DIR: /data/fileserver/export
+          PAPERLESS_MEDIA_ROOT: /library/media
+          PAPERLESS_OCR_LANGUAGE: deu+eng
+          PAPERLESS_REDIS: redis://localhost:6379
+          PAPERLESS_TASK_WORKERS: 2
+          PAPERLESS_TIKA_ENABLED: 1
+          PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
+          PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
+          PAPERLESS_TIME_ZONE: Europe/Vienna
+          PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
+          PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "true"
+          PAPERLESS_DISABLE_REGULAR_LOGIN: "true"
+          PAPERLESS_DBENGINE: postgresql
+          PAPERLESS_DBHOST: http://localhost:5432
+
+        envFrom:
+          - secretRef:
+              name: paperless-secret
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: 100m
+          limits:
+            memory: 4Gi
+
+      postgres:
+        image:
+          repo: docker.io/library/postgres
+          image: 16
+        envFrom:
+          - secretRef:
+              name: paperless-secret
+
+        ports:
+          - container-port: 5432
+
+      gotenberg:
+        image:
+          repository: gotenberg/gotenberg
+          tag: 8.5.1
+          pullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3000
+        command:
+          - "gotenberg"
+          - "--chromium-disable-javascript=true"
+          - "--chromium-allow-list=file:///tmp/.*"
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 10m
+      tika:
+        image:
+          repository: ghcr.io/paperless-ngx/tika
+          tag: 2.9.1-minimal
+          pullPolicy: IfNotPresent
+        ports:
+          - containerPort: 9998
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 10m
+      redis:
+        order: 1
+        image:
+          repository: public.ecr.aws/docker/library/redis
+          tag: 7.2.5
+        ports:
+          - containerPort: 6379
+        env:
+          REDIS_REPLICATION_MODE: master
+        command: [ "redis-server" ]
+
+
+persistence:
+  library:
+    enabled: true
+    existingClaim: paperless-library
+    globalMounts:
+      - path: /library
+  pg-data:
+    enabled: true
+    existingClaim: paperless-pg-data
+    globalMounts:
+      - path: /var/lib/postgresql/data
+  nas-consume:
+    enabled: true
+    path: /var/storage/paperless/consume
+    server: nfs.007337.xyz
+    type: nfs
+    globalMounts:
+      - path: /data/fileserver/consume
+  nas-export:
+    enabled: true
+    path: /var/storage/paperless/export
+    server: nfs.007337.xyz
+    type: nfs
+    globalMounts:
+      - path: /data/fileserver/export
