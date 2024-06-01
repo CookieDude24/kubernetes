@@ -21,7 +21,7 @@ controllers:
           tag: 2.8.6
         env:
           PAPERLESS_URL: https://home.007337.xyz
-          PAPERLESS_CSRF_TRUSTED_ORIGINS: "https://home.007337.xyz/paperless/*,https://home.007337.xyz/paperless/, https://home.007337.xyz/paperless"
+          PAPERLESS_CSRF_TRUSTED_ORIGINS: "https://home.007337.xyz/paperless/*, https://home.007337.xyz/paperless/, https://home.007337.xyz/paperless, https://home.007337.xyz/paperless/accounts/oidc/authentik/login/"
           PAPERLESS_FORCE_SCRIPT_NAME: /paperless
           PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
           PAPERLESS_PORT: 8000
