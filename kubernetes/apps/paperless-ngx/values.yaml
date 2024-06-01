@@ -58,6 +58,9 @@ controllers:
         image:
           repository: docker.io/library/postgres
           tag: 16
+
+        env:
+          PGDATA: /var/lib/postgresql/data/pgdata
         envFrom:
           - secretRef:
               name: paperless-secret
