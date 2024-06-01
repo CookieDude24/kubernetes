@@ -133,7 +133,7 @@
       template:
         src: fileserver_samba_conf.conf
         dest: /etc/samba/smb.conf
-      notify: reboot samba
+      notify: restart samba
 
 
     - name: reboot if requiered
@@ -149,6 +149,7 @@
       ansible.builtin.reboot:
         msg: "Reboot initiated by Ansible"
         reboot_timeout: 3600
+
     - name: restart samba
       service:
         name: smbd
