@@ -42,7 +42,7 @@ controllers:
           PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "true"
           PAPERLESS_DISABLE_REGULAR_LOGIN: "true"
           PAPERLESS_DBENGINE: postgresql
-          PAPERLESS_DBHOST: http://localhost:5432
+          PAPERLESS_DBHOST: localhost
 
         envFrom:
           - secretRef:
