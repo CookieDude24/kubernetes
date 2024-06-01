@@ -63,7 +63,7 @@ controllers:
               name: paperless-secret
 
         ports:
-          - container-port: 5432
+          - containerPort: 5432
 
       gotenberg:
         image:
