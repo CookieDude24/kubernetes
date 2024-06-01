@@ -152,5 +152,5 @@
 
     - name: restart samba
       service:
-        name: smbd
+        name: smb
         state: restarted
