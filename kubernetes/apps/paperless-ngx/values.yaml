@@ -96,15 +96,15 @@ controllers:
           requests:
             cpu: 10m
       redis:
-        order: 1
         image:
-          repository: public.ecr.aws/docker/library/redis
-          tag: 7.2.5
-        ports:
-          - containerPort: 6379
-        env:
-          REDIS_REPLICATION_MODE: master
-        command: [ "redis-server" ]
+          repository: redis
+          tag: 7.2.5@sha256:01afb31d6d633451d84475ff3eb95f8c48bf0ee59ec9c948b161adb4da882053
+        resources:
+          limits:
+            memory: 50Mi
+          requests:
+            cpu: 10m
+            memory: 18Mi
 
 
 persistence:
