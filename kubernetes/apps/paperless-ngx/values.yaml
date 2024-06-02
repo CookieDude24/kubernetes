@@ -27,8 +27,8 @@ controllers:
           PAPERLESS_CONSUMER_RECURSIVE: "true"
           PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
 
-          PAPERLESS_CONSUMPTION_DIR: /data/fileserver/consume
-          PAPERLESS_EXPORT_DIR: /data/fileserver/export
+          PAPERLESS_CONSUMPTION_DIR: /data/consume
+          PAPERLESS_EXPORT_DIR: /data/export
 
           PAPERLESS_OCR_LANGUAGE: deu+eng
           PAPERLESS_REDIS: redis://localhost:6379
@@ -119,17 +119,10 @@ persistence:
     existingClaim: paperless-pg-data
     globalMounts:
       - path: /var/lib/postgresql/data
-  nas-consume:
+  nas:
     enabled: true
-    path: /var/storage/paperless/consume
+    path: /var/storage/paperless
     server: nfs.007337.xyz
     type: nfs
     globalMounts:
-      - path: /data/fileserver/consume
-  nas-export:
-    enabled: true
-    path: /var/storage/paperless/export
-    server: nfs.007337.xyz
-    type: nfs
-    globalMounts:
-      - path: /data/fileserver/export
+      - path: /data
