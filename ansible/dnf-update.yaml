@@ -1,6 +1,16 @@
 - hosts: almalinux:fedora
   become: yes
   tasks:
+
+    - name: Add two IPv4 DNS server addresses
+      community.general.nmcli:
+        conn_name: eth0
+        type: ethernet
+        dns4:
+          - 192.168.1.1
+          - 9.9.9.9
+        state: present
+
     - name: ensure Basic tools are installed
       dnf:
         name: 
