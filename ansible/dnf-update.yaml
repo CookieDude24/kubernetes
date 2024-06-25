@@ -10,6 +10,7 @@
           - eth0
           - 192.168.1.1
           - 9.9.9.9
+      when: inventory_hostname in groups["fedora"]
 
     - name: ensure Basic tools are installed
       dnf:
