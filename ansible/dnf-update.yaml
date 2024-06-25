@@ -57,8 +57,8 @@
         path: /home/maxid/.ssh/authorized_keys
 
 
-    - name: reboot if requiered
-      ansible.builtin.command: needs-restarting -r
+    - name: reboot if required
+      ansible.builtin.command: dnf needs-restarting -r
       register: reboot_required
       failed_when: false
       changed_when: reboot_required.rc != 0
