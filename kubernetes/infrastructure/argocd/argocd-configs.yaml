@@ -55,3 +55,14 @@ data:
   server.basehref: "/argocd"
   # Used if Argo CD is running behind reverse proxy under subpath different from /
   server.rootpath: "/argocd"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kubernetes-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: "git"
+  url: "https://github.com/CookieDude24/kubernetes.git"
