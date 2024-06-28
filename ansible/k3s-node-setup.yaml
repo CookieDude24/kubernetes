@@ -23,6 +23,20 @@
         state: started
         enabled: true
 
+    - name: Create a ext4 filesystem on /dev/sdb and check disk blocks
+      community.general.filesystem:
+        fstype: ext4
+        dev: /dev/sdb
+      when: inventory_hostname in groups["k3s"]
+
+    - name: Mount sdb
+      mount:
+        path: /mnt/sdb
+        src: /dev/sdb
+        fstype: ext4
+        state: present
+      when: inventory_hostname in groups["k3s"]
+
     - name: reboot if requiered
       ansible.builtin.command: needs-restarting -r
       register: reboot_required
