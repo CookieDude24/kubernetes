@@ -23,6 +23,11 @@
         state: started
         enabled: true
 
+    - name: Create sdb mountpoint
+      ansible.builtin.file:
+        path: /mnt/sdb
+        state: directory
+
     - name: Create a ext4 filesystem on /dev/sdb and check disk blocks
       community.general.filesystem:
         fstype: ext4
