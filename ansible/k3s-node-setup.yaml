@@ -12,6 +12,9 @@
           - qemu-guest-agent
           - dnf-utils
           - cryptsetup
+          - kubernetes-client
+          - helm
+          - git
         state: present
 
     - name: start qemu agent
