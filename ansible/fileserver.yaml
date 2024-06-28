@@ -104,6 +104,48 @@
         state: directory
         mode: '0777'
 
+    - name: Create container-data directory
+      ansible.builtin.file:
+        path: /var/storage/media/container-data
+        state: directory
+        mode: '0775'
+
+    - name: Create prowlarr directory
+      ansible.builtin.file:
+        path: /var/storage/media/container-data/prowlarr
+        state: directory
+        mode: '0775'
+
+    - name: Create sonarr directory
+      ansible.builtin.file:
+        path: /var/storage/media/container-data/sonarr
+        state: directory
+        mode: '0775'
+
+    - name: Create radarr directory
+      ansible.builtin.file:
+        path: /var/storage/media/container-data/radarr
+        state: directory
+        mode: '0775'
+
+    - name: Create jellyfin directory
+      ansible.builtin.file:
+        path: /var/storage/media/container-data/jellyfin
+        state: directory
+        mode: '0775'
+
+    - name: Create qbittorrent directory
+      ansible.builtin.file:
+        path: /var/storage/media/container-data/qbittorrent
+        state: directory
+        mode: '0775'
+
+    - name: Create media directory
+      ansible.builtin.file:
+        path: /var/storage/media
+        state: directory
+        mode: '0775'
+
     - name: Create backup directory
       ansible.builtin.file:
         path: /var/storage/backup

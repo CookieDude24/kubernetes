@@ -7,16 +7,7 @@ service:
     type: ClusterIP
 controllers:
   main:
-    type: statefulset
 
-    statefulset:
-      volumeClaimTemplates:
-        - name: config
-          globalMounts:
-            - path: /config
-          storageClass: longhorn
-          accessMode: ReadWriteOnce
-          size: 1Gi
     containers:
       main:
         env:
@@ -59,6 +50,11 @@ persistence:
   data:
     enabled: true
     path: /var/storage/media/
+    server: nfs.007337.xyz
+    type: nfs
+  config:
+    enabled: true
+    path: /var/storage/media/container-data/jellyfin
     server: nfs.007337.xyz
     type: nfs
   cache:

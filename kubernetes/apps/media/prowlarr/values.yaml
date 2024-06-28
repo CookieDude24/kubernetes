@@ -7,16 +7,6 @@ service:
     type: ClusterIP
 controllers:
   main:
-    type: statefulset
-
-    statefulset:
-      volumeClaimTemplates:
-        - name: config
-          globalMounts:
-            - path: /config
-          storageClass: longhorn
-          accessMode: ReadWriteOnce
-          size: 1Gi
 
     pod:
       securityContext:
@@ -68,3 +58,10 @@ controllers:
               httpGet:
                 path: *path
                 port: *port
+
+persistence:
+  config:
+    enabled: true
+    path: /var/storage/media/container-data/prowlarr
+    server: nfs.007337.xyz
+    type: nfs
