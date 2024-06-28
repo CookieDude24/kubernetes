@@ -27,6 +27,7 @@
       ansible.builtin.file:
         path: /mnt/sdb
         state: directory
+      when: inventory_hostname in groups["k3s"]
 
     - name: Create a ext4 filesystem on /dev/sdb and check disk blocks
       community.general.filesystem:
