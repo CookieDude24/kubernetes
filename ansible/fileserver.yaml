@@ -147,6 +147,8 @@
       ansible.builtin.file:
         path: /var/storage/media/container-data/radarr
         state: directory
+        owner: media
+        group: media
         mode: '0740'
 
     - name: Create jellyfin directory
