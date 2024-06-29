@@ -91,8 +91,8 @@
       ansible.builtin.file:
         path: /var/storage/media
         state: directory
-        owner: nobody
-        group: nobody
+        owner: media
+        group: media
         mode: '0776'
 
     - name: Create tv directory
@@ -101,7 +101,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create movies directory
       ansible.builtin.file:
@@ -109,7 +109,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create downloads directory
       ansible.builtin.file:
@@ -117,7 +117,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create container-data directory
       ansible.builtin.file:
@@ -125,7 +125,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create prowlarr directory
       ansible.builtin.file:
@@ -133,7 +133,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create sonarr directory
       ansible.builtin.file:
@@ -141,7 +141,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create radarr directory
       ansible.builtin.file:
@@ -149,7 +149,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create jellyfin directory
       ansible.builtin.file:
@@ -157,7 +157,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create qbittorrent directory
       ansible.builtin.file:
@@ -165,7 +165,7 @@
         state: directory
         owner: media
         group: media
-        mode: '0740'
+        mode: '0770'
 
     - name: Create backup directory
       ansible.builtin.file:
