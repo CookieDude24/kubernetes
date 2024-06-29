@@ -46,7 +46,7 @@
     - name: Add media user
       user:
         name: media
-        id: 1100
+        uid: 1100
         shell: /usr/sbin/nologin
         state: present
 
