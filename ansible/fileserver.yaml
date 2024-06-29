@@ -93,7 +93,7 @@
         state: directory
         owner: nobody
         group: nobody
-        mode: '0774'
+        mode: '0776'
 
     - name: Create tv directory
       ansible.builtin.file:
