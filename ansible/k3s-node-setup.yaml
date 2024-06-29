@@ -43,7 +43,14 @@
         state: present
       when: inventory_hostname in groups["k3s"]
 
-    - name: reboot if requiered
+    - name: Add media user
+      user:
+        name: media
+        id: 1100
+        shell: /usr/sbin/nologin
+        state: present
+
+    - name: reboot if required
       ansible.builtin.command: needs-restarting -r
       register: reboot_required
       failed_when: false
