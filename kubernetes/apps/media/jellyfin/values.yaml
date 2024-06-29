@@ -7,6 +7,13 @@ service:
     type: ClusterIP
 controllers:
   main:
+    strategy: RollingUpdate
+    pod:
+      securityContext:
+        runAsUser: 1100
+        runAsGroup: &group 1100
+        fsGroup: *group
+        fsGroupChangePolicy: "OnRootMismatch"
 
     containers:
       main:

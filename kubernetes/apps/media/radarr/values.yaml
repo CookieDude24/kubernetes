@@ -7,11 +7,11 @@ service:
     type: ClusterIP
 controllers:
   main:
-
+    strategy: RollingUpdate
     pod:
       securityContext:
-        runAsUser: 1001
-        runAsGroup: &group 1001
+        runAsUser: 1100
+        runAsGroup: &group 1100
         fsGroup: *group
         fsGroupChangePolicy: "OnRootMismatch"
 
