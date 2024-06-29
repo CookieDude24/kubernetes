@@ -49,6 +49,7 @@
         uid: 1100
         shell: /usr/sbin/nologin
         state: present
+      when: inventory_hostname in groups["k3s"]
 
     - name: reboot if required
       ansible.builtin.command: needs-restarting -r
