@@ -191,20 +191,13 @@
         state: directory
         mode: '0777'
 
-    - name: Add proxmox user
-      user:
-        name: proxmox
-        uid: 1101
-        shell: /usr/sbin/nologin
-        state: present
-
     - name: Create proxmox directory
       ansible.builtin.file:
         path: /var/storage/proxmox
         state: directory
-        owner: proxmox
-        group: proxmox
-        mode: '0770'
+        owner: root
+        group: root
+        mode: '0777'
 
     - name: Add omada user
       user:
