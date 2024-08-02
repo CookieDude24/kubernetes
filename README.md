@@ -25,4 +25,35 @@ create the main.key manifest for sealed-secrets (I store my keys in my password 
 1. `kubectl apply sealed-secrets/controller.yaml`
 2. `kubectl delete pod -n kube-system -l name=sealed-secrets-controller`
 
+### enable authentik remote-cluster integration 
+
+1.  install the authentik-remote-cluster-integration.yaml
+2. create the kubeconfig file for the integration
+   1. `KUBE_API=$(kubectl config view --minify --output jsonpath="{.clusters[*].cluster.server}")`
+   2. `NAMESPACE=authentik`
+   3. `SECRET_NAME=$(kubectl get serviceaccount authentik-remote-clusters -o jsonpath='{.secrets[0].name}' 2>/dev/null || echo -n "authentik-remote-clusters")`
+   4. `KUBE_CA=$(kubectl -n $NAMESPACE get secret/$SECRET_NAME -o jsonpath='{.data.ca\.crt}')`
+   5. `KUBE_TOKEN=$(kubectl -n $NAMESPACE get secret/$SECRET_NAME -o jsonpath='{.data.token}' | base64 --decode)`
+   6. ``` yaml  
+      echo "apiVersion: v1
+      kind: Config
+      clusters:
+      - name: default-cluster
+        cluster:
+        certificate-authority-data: ${KUBE_CA}
+        server: ${KUBE_API}
+        contexts:
+      - name: default-context
+        context:
+        cluster: default-cluster
+        namespace: $NAMESPACE
+        user: authentik-user
+        current-context: default-context
+        users:
+      - name: authentik-user
+        user:
+        token: ${KUBE_TOKEN}" > config.yaml
+      ``` 
+3. change the cluster address in config.yaml to the domain name
+4. paste the contents of config.yaml into the integrations config
 
