@@ -13,7 +13,7 @@ controllers:
         image:
           pullPolicy: IfNotPresent
           repository: ghcr.io/cookiedude24/school-day-countdown
-          tag: sha256-ccf767701f9840efa3b1d087ae91fa7f24cec470d12b98b69c3763c0b7e6f9cf.sig
+          tag: master
         probes:
           probes:
             liveness: &probe
