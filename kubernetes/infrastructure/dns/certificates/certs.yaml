@@ -23,6 +23,9 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
 
+
+
+
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: TLSStore
@@ -45,6 +48,34 @@ spec:
   dnsNames:
     - "media.007337.xyz"
     - "*.media.007337.xyz"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: TLSStore
+metadata:
+  name: default
+  namespace: schoolday-countdown
+spec:
+  certificates:
+    - secretName: maxid-me-tls-prod
+  defaultCertificate:
+    secretName: maxid-me-tls-prod
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: maxid-me-tls-prod
+  namespace: schoolday-countdown
+spec:
+  secretName: maxid-me-tls-prod
+  dnsNames:
+    - "maxid.me"
+    - "*.maxid.me"
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
