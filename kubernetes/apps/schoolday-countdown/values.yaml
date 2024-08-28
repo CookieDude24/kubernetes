@@ -11,7 +11,7 @@ controllers:
     containers:
       main:
         image:
-          pullPolicy: IfNotPresent
+          pullPolicy: Always
           repository: ghcr.io/cookiedude24/school-day-countdown
           tag: master
         probes:
